@@ -1,0 +1,20 @@
+// 处理一些公共样式
+.root{
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  font-size: 14px;
+}
+.pr0{
+  padding-right: 0 !important;
+}
+.pl0{
+  padding-left: 0 !important;
+}
+.pb0{
+  padding-bottom: 0 !important;
+}
+.pt0{
+  padding-top: 0 !important;
+}
