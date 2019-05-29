@@ -101,7 +101,7 @@
         <copyRight></copyRight>
       </div>
     </div>
-    <div class="shadow" :class="{show: showModal}" @click="closeModal">
+    <div class="shadow" :class="{show: showModal}" @click.stop="closeModal">
       <div class="modal-wrap" @click.stop="() => {}">
         <div class="modal-inner">
           <div class="modal-title-wrap"></div>
