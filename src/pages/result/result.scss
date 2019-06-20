@@ -45,5 +45,21 @@
         }
       }
     }
+    .table-wrap{
+      margin-top: 20px;
+      padding-bottom: 40px;
+      .el-table__header-wrapper .el-table__header thead  th{
+        background: #f0f0f0;
+      }
+      .el-table td, .el-table th{
+        padding: 5px;
+      }
+    }
+    .pagenation-wrap{
+      margin-top: 10px;
+      .el-pagination__jump{
+        float: right;
+      }
+    }
   }
 }

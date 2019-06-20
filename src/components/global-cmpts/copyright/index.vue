@@ -1,7 +1,9 @@
 <template>
   <div class="copyright-wrap">
-    <div class="line"></div>
-    <span class="copyright">Copyright &copy All Rights Reserved 2019 BGI Resecrch Guangdong ICP 10059378</span>
+    <div class="copyright-inner">
+      <div class="line"></div>
+      <span class="copyright">Copyright &copy All Rights Reserved 2019 BGI Resecrch Guangdong ICP 10059378</span>
+    </div>
   </div>
 </template>
 <script>
@@ -11,12 +13,21 @@ export default {
 </script>
 <style lang="scss" scoped>
 .copyright-wrap{
-  margin-top: 10px;
   height: 30px;
   width: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 11111111;
+  padding-bottom: 20px;
+  .copyright-inner{
+    height: 30px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
   .line{
     width: 100%;
     height: 1px;

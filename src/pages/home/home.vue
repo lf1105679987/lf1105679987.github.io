@@ -188,6 +188,9 @@ export default {
       value_2: ''
     };
   },
+  created () {
+    // const option
+  },
   mounted () {
     let self = this;
     this.$nextTick(function () {
