@@ -23,10 +23,10 @@
             <div class="module-content pdlr">
               <div class="form-wrap">
                 <div class="textarea-item">
-                  <TextareaForDropTxt :tips="tips_1" :placeholder="placeholder_1"></TextareaForDropTxt>
+                  <TextareaForDropTxt :change="changeText1" :tips="tips_1" :placeholder="placeholder_1"></TextareaForDropTxt>
                 </div>
                 <div class="textarea-item">
-                  <TextareaForDropTxt :tips="tips_2" :placeholder="placeholder_2"></TextareaForDropTxt>
+                  <TextareaForDropTxt :change="changeText2" :tips="tips_2" :placeholder="placeholder_2"></TextareaForDropTxt>
                 </div>
                 <div class="submit" @click="Submit">Submit</div>
               </div>
@@ -109,7 +109,7 @@
             <div class="select-wrap">
               <div class="select-all-ele">Select Allele</div>
               <div class="m-select m-select_1">
-                <el-select v-model="value_1" placeholder="请选择" >
+                <el-select v-model="value_1" placeholder="请选择" @change="changeAllele">
                   <el-option
                     v-for="item in options_1"
                     :key="item.value"
@@ -121,10 +121,10 @@
               <div class="m-select m-select_2">
                 <el-select v-model="value_2" placeholder="请选择"  popper-class="m-select m-select_2">
                   <el-option
-                    v-for="item in options_1"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="item in options_2"
+                    :key="item"
+                    :label="item"
+                    :value="item">
                   </el-option>
                 </el-select>
               </div>
@@ -137,7 +137,7 @@
   </div>
 </template>
 <script>
-import config from './config.js';
+import config, { getAlleleMap, peptidesMap } from './config.js';
 import TextareaForDropTxt from '@/components/bus-cmpts/textarea-for-drop-txt';
 import Vue from 'vue';
 import { Select, Option, Button } from 'element-ui';
@@ -159,31 +159,10 @@ export default {
       tips_1: '* 多肽数量应小于1000条',
       placeholder_2: '输入表达量/拖入表达量.txt文件',
       tips_2: '* 表达量应跟多肽数量对应',
-      options_1: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }, {
-        value: '选项6',
-        label: '北京烤鸭'
-      }, {
-        value: '选项7',
-        label: '北京烤鸭'
-      }, {
-        value: '选项8',
-        label: '北京烤鸭'
-      }],
+      text1: '',
+      text2: '',
+      options_1: getAlleleMap(),
+      options_2: [],
       value_1: '',
       value_2: ''
     };
@@ -203,14 +182,31 @@ export default {
     });
   },
   methods: {
+    changeText1 (val) {
+      this.text1 = val;
+    },
+    changeText2 (val) {
+      this.text2 = val;
+    },
+    changeAllele (val) {
+      this.options_2 = peptidesMap[val];
+    },
     Submit () {
       this.showModal = true;
-      console.log('Submit');
     },
     Submits () {
-      console.log('Submits');
+      const data = {
+        value_1: this.value_1,
+        value_2: this.value_2,
+        text1: this.text1,
+        text2: this.text1
+      };
+      console.log('提交的数据', data);
     },
     closeModal () {
+      this.value_1 = '';
+      this.value_2 = '';
+      this.options_2 = [];
       this.showModal = false;
     }
   }
