@@ -99,8 +99,9 @@ export const getAlleleMap = () => {
   let list = [];
   allele.split(',').forEach(item => {
     const value = item.split('-')[1];
+    const label = `${item.split('-')[0]}-${value.substr(0, 1)}*${value.substr(1, 2)}:${value.substr(3, 2)}:(${ value.substr(0, 3)})`;
     list.push({
-      label: `${item}(${value.substring(0, 3)})`,
+      label: label,
       value: value
     });
   });

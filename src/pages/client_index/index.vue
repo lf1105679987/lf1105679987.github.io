@@ -213,5 +213,5 @@ export default {
 };
 </script>
 <style lang="scss" type="text/css">
-@import './home.scss';
+@import './index.scss';
 </style>
