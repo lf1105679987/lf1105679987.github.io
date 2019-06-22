@@ -140,7 +140,7 @@
 import config, { getAlleleMap, peptidesMap } from './config.js';
 import TextareaForDropTxt from '@/components/bus-cmpts/textarea-for-drop-txt';
 import Vue from 'vue';
-import { Select, Option, Button } from 'element-ui';
+import { Select, Option, Button, Message } from 'element-ui';
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Button);
@@ -192,14 +192,22 @@ export default {
       this.options_2 = peptidesMap[val];
     },
     Submit () {
+      if (!this.text1.trim() || !this.text2.trim()) {
+        Message.error('请输入多肽和表达量！');
+        return false;
+      }
       this.showModal = true;
     },
     Submits () {
+      if (!this.value_1 || !this.value_2) {
+        Message.error('请选择！');
+        return false;
+      }
       const data = {
         value_1: this.value_1,
         value_2: this.value_2,
-        text1: this.text1,
-        text2: this.text1
+        text1: this.text1.replace(/\n/g, '-'),
+        text2: this.text2.replace(/\n/g, '-')
       };
       console.log('提交的数据', data);
     },
