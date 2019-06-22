@@ -1,7 +1,7 @@
 <template>
   <div class="menu-wrap">
     <div v-for="(item, index) in data" :key="index" class="menu-item">
-      <a :href="`#${item}`">{{item}}</a>
+      <a :href="item.href">{{item.text}}</a>
     </div>
   </div>
 </template>
@@ -13,11 +13,26 @@ export default {
       type: Array,
       default () {
         return [
-          'EPIC',
-          'Submission',
-          'Result',
-          'Cltation',
-          'Help'
+          {
+            text: 'EPIC',
+            href: '#EPIC'
+          },
+          {
+            text: 'Submission',
+            href: '#Submission'
+          },
+          {
+            text: 'Result',
+            href: '#Result'
+          },
+          {
+            text: 'Cltation',
+            href: '#Cltation'
+          },
+          {
+            text: 'Help',
+            href: '#Help'
+          }
         ];
       }
     }

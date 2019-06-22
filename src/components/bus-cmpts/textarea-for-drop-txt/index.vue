@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+import { Message } from 'element-ui';
 export default {
   name: 'TextareaForDropTxt',
   props: {
@@ -65,11 +66,21 @@ export default {
   methods: {
     handle (type, data) {
       var _this = this;
-      var reader = new FileReader();
-      reader.readAsText(data[0]);
-      reader.onload = function (e) {
-        _this.text = e.target.result;
-      };
+      if (data && data.length) {
+        const file = data[0];
+        const index = file.name.lastIndexOf('.');
+        const fileNameLength = file.name.length;
+        const suffix = file.name.substring(index + 1, fileNameLength);
+        if (suffix === 'txt') {
+          var reader = new FileReader();
+          reader.readAsText(data[0]);
+          reader.onload = function (e) {
+            _this.text = e.target.result;
+          };
+        } else {
+          Message.error('请拖入txt格式文本！');
+        }
+      }
     },
     outPutVal () {
       this.change(this.text);

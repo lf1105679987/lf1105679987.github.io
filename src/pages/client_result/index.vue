@@ -3,7 +3,7 @@
     <div class="home">
       <div class="main">
         <Header></Header>
-        <Menu></Menu>
+        <Menu :data="menu"></Menu>
         <div class="container">
           <div class="top">
             <span>Result</span>
@@ -73,6 +73,28 @@ export default {
     return {
       input: '',
       currentPage: 1,
+      menu: [
+        {
+          text: 'EPIC',
+          href: './client_index.html'
+        },
+        {
+          text: 'Submission',
+          href: './client_index.html'
+        },
+        {
+          text: 'Result',
+          href: '#'
+        },
+        {
+          text: 'Cltation',
+          href: './client_index.html'
+        },
+        {
+          text: 'Help',
+          href: './client_index.html'
+        }
+      ],
       tableData: [
         {
           polypeptide: 'Polypeptide',

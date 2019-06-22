@@ -3,7 +3,7 @@
     <div class="home">
       <div class="main">
         <Header></Header>
-        <Menu></Menu>
+        <Menu :data="menu"></Menu>
         <div class="container">
           <div class="module">
             <div class="module-title" id="EPIC">
@@ -152,6 +152,28 @@ export default {
   data () {
     return {
       showModal: false,
+      menu: [
+        {
+          text: 'EPIC',
+          href: '#EPIC'
+        },
+        {
+          text: 'Submission',
+          href: '#Submission'
+        },
+        {
+          text: 'Result',
+          href: './client_result.html'
+        },
+        {
+          text: 'Cltation',
+          href: '#Cltation'
+        },
+        {
+          text: 'Help',
+          href: '#Help'
+        }
+      ],
       onLine: config.onLine,
       citaions: config.citaions,
       help: config.help,
