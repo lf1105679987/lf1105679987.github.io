@@ -29,6 +29,11 @@ export default {
       text: ''
     };
   },
+  created () {
+    this.$bus.$on('clearInput', res => {
+      this.text = '';
+    });
+  },
   mounted () {
     var _this = this;
     window.onload = function () {

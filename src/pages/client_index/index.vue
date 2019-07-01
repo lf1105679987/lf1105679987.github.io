@@ -141,6 +141,7 @@ import config, { getAlleleMap, peptidesMap } from './config.js';
 import TextareaForDropTxt from '@/components/bus-cmpts/textarea-for-drop-txt';
 import Vue from 'vue';
 import { Select, Option, Button, Message } from 'element-ui';
+import {instance, API} from '../../api/api';
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Button);
@@ -186,11 +187,12 @@ export default {
       options_1: getAlleleMap(),
       options_2: [],
       value_1: '',
-      value_2: ''
+      value_2: '',
+      userinfo: {}
     };
   },
   created () {
-    // const option
+    this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
   },
   mounted () {
     let self = this;
@@ -214,8 +216,20 @@ export default {
       this.options_2 = peptidesMap[val];
     },
     Submit () {
+      if (!this.userinfo.userId) {
+        this.$bus.$emit('openLogin', {a: 1});
+        return false;
+      }
       if (!this.text1.trim() || !this.text2.trim()) {
         Message.error('请输入多肽和表达量！');
+        return false;
+      }
+      const text1 = this.text1.replace(/\n/g, '-');
+      const text2 = this.text2.replace(/\n/g, '-');
+      const text1List = text1.split('-');
+      const text2List = text2.split('-');
+      if (text1List.length !== text2List.length) {
+        Message.error('请输入多肽数量与表达量数量一致！');
         return false;
       }
       this.showModal = true;
@@ -225,13 +239,31 @@ export default {
         Message.error('请选择！');
         return false;
       }
+      const text1 = this.text1.replace(/\n/g, '-');
+      const text2 = this.text2.replace(/\n/g, '-');
+      const text1List = text1.split('-');
+      const text2List = text2.split('-');
       const data = {
-        value_1: this.value_1,
-        value_2: this.value_2,
-        text1: this.text1.replace(/\n/g, '-'),
-        text2: this.text2.replace(/\n/g, '-')
+        userId: this.userinfo.userId,
+        allele: this.value_1,
+        length: this.value_2,
+        polypeptides: text1List,
+        exps: text2List
       };
-      console.log('提交的数据', data);
+      const _this = this;
+      instance.post(API.addSample, data).then(({data = {}}) => {
+        if (data.success === 'true') {
+          Message.success('添加成功!');
+          _this.value_1 = '';
+          _this.value_2 = '';
+          _this.$bus.$emit('clearInput', {});
+        } else {
+          Message.error(data.msg || '添加失败!');
+        }
+        _this.showModal = false;
+      }).catch(() => {
+        Message.error('异常错误，请稍后重试!');
+      });
     },
     closeModal () {
       this.value_1 = '';

@@ -52,6 +52,9 @@
     }
     .circle{
       position: relative;
+      .relative-wrap a{
+        margin-right: 10px;
+      }
     }
     .circle::before{
       content: '';

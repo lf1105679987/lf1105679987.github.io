@@ -3,7 +3,7 @@
     <div class="home">
       <div class="main">
         <Header></Header>
-        <Menu></Menu>
+        <Menu :data="menu"></Menu>
         <div class="container">
           <div class="top">
             <span>Result</span>
@@ -11,33 +11,34 @@
                 <el-input
                   size="mini"
                   placeholder="Enter E-Mail"
-                  v-model="input"
+                  v-model="email"
                   clearable>
                 </el-input>
               </div>
-              <span class="oprate-btn">Send</span>
-              <span class="oprate-btn">Download</span>
+              <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
+              <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="downLoad">Download</span>
             </div>
           </div>
           <div class="table-wrap">
             <el-table
-              maxHeight="450"
               :data="tableData"
+              @row-click="rowClick"
+              highlight-current-row
               border
               style="width: 100%">
               <el-table-column
                 align="center"
-                prop="polypeptide"
+                prop="allele"
                 label="Polypeptide">
               </el-table-column>
               <el-table-column
                 align="center"
-                prop="typeing"
+                prop="allele"
                 label="Typeing">
               </el-table-column>
               <el-table-column
                 align="center"
-                prop="score"
+                prop="allele"
                 label="Score">
               </el-table-column>
             </el-table>
@@ -47,10 +48,10 @@
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="currentPage"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
+                :page-sizes="[20, 50, 100, 200]"
+                :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="400">
+                :total="total">
               </el-pagination>
             </div>
           </div>
@@ -61,8 +62,9 @@
   </div>
 </template>
 <script>
+import {instance, API} from '../../api/api';
 import Vue from 'vue';
-import { Input, Table, TableColumn, Pagination } from 'element-ui';
+import { Input, Table, TableColumn, Pagination, Message } from 'element-ui';
 Vue.use(Input);
 Vue.use(Table);
 Vue.use(TableColumn);
@@ -71,96 +73,102 @@ export default {
   name: 'Main',
   data () {
     return {
-      input: '',
       currentPage: 1,
-      tableData: [
+      menu: [
         {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
+          text: 'EPIC',
+          href: './client_index.html'
         },
         {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
+          text: 'Submission',
+          href: './client_index.html'
         },
         {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
+          text: 'Result',
+          href: '#'
         },
         {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
+          text: 'Cltation',
+          href: './client_index.html'
         },
         {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
-        },
-        {
-          polypeptide: 'Polypeptide',
-          typeing: 'typeing',
-          score: 'Score'
+          text: 'Help',
+          href: './client_index.html'
         }
-      ]
+      ],
+      tableData: [],
+      total: 0,
+      pageSize: 20,
+      userinfo: {},
+      activeRow: {},
+      email: ''
     };
   },
+  created () {
+    this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
+  },
   mounted () {
-
+    this.getData();
   },
   methods: {
-    handleSizeChange () {
-
+    downLoad () {
+      if (this.email.trim() === '') {
+        return false;
+      }
+      if (this.activeRow && this.activeRow.sampleId) {
+        Message.error('暂无下载接口！');
+      } else {
+        Message.error('请选择要下载的结果！');
+      }
     },
-    handleCurrentChange () {
-
+    sendEmail () {
+      if (this.email.trim() === '') {
+        return false;
+      }
+      if (this.activeRow && this.activeRow.sampleId) {
+        instance.post(API.sendEmail, {
+          email: this.email,
+          sampleId: this.activeRow.sampleId
+        }).then(({data}) => {
+          if (data.success === 'true') {
+            Message.success('发送成功！');
+          } else {
+            Message.error('发送失败！');
+          }
+        }).catch(() => {
+          Message.error('异常错误,请稍后重试！');
+        });
+      } else {
+        Message.error('请选择要发送的结果！');
+      }
+    },
+    rowClick (row, event, column) {
+      this.activeRow = row;
+    },
+    handleSizeChange (val) {
+      this.pageSize = val;
+      this.getData();
+    },
+    handleCurrentChange (val) {
+      this.currentPage = val;
+      this.getData();
+    },
+    getData () {
+      const _this = this;
+      const params = {
+        userId: this.userinfo.userId,
+        page: this.currentPage,
+        pageSize: this.pageSize
+      };
+      instance.post(API.sampleList, params).then(({data = {}}) => {
+        if (data.success === 'true') {
+          const result = data.data || {};
+          _this.total = Number(result.totalRows || 0);
+          _this.tableData = result.records || [];
+        }
+      }).catch(() => {
+        Message.error('异常错误，请稍后重试！');
+      });
     }
   }
 };
