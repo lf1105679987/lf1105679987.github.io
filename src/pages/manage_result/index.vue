@@ -82,7 +82,7 @@ export default {
         },
         {
           text: 'Submission',
-          href: './client_submission.html'
+          href: './manage_submission.html'
         },
         // {
         //   text: 'Result',

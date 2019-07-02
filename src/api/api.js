@@ -22,6 +22,7 @@ const API = {
   register: baseURL + '/user/register',
   addSample: baseURL + '/sample/addSample',
   sampleList: baseURL + '/sample/search',
-  sendEmail: baseURL + '/trainResult/sendMail'
+  sendEmail: baseURL + '/trainResult/sendMail',
+  trainResult: baseURL + '/trainResult/search'
 };
 export {instance, API};

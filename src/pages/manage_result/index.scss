@@ -42,6 +42,9 @@
           &:hover{
             opacity: 0.9;
           }
+          &.disabled{
+            background: #999;
+          }
         }
       }
     }

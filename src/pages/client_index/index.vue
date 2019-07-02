@@ -114,7 +114,7 @@
                     v-for="item in options_1"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value">
+                    :value="item.label">
                   </el-option>
                 </el-select>
               </div>
@@ -160,12 +160,12 @@ export default {
         },
         {
           text: 'Submission',
-          href: '#Submission'
+          href: './client_submission.html'
         },
-        {
-          text: 'Result',
-          href: './client_result.html'
-        },
+        // {
+        //   text: 'Result',
+        //   href: './client_result.html'
+        // },
         {
           text: 'Cltation',
           href: '#Cltation'

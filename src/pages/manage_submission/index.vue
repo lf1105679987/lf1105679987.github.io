@@ -6,8 +6,8 @@
         <Menu :data="menu"></Menu>
         <div class="container">
           <div class="top">
-            <span>Result</span>
-            <div class="oprate-wrap"><div class="email">
+            <span>Submission</span>
+            <!-- <div class="oprate-wrap"><div class="email">
                 <el-input
                   size="mini"
                   placeholder="Enter E-Mail"
@@ -17,29 +17,40 @@
               </div>
               <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
               <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="downLoad">Download</span>
-            </div>
+            </div> -->
           </div>
           <div class="table-wrap">
             <el-table
               :data="tableData"
-              @row-click="rowClick"
               highlight-current-row
               border
               style="width: 100%">
               <el-table-column
                 align="center"
-                prop="allele"
-                label="Polypeptide">
+                label="IP">
+                <template slot-scope="scope">
+                  <span>暂无ip字段</span>
+                </template>
               </el-table-column>
               <el-table-column
                 align="center"
                 prop="allele"
-                label="Typeing">
+                label="Allele">
               </el-table-column>
               <el-table-column
                 align="center"
-                prop="allele"
-                label="Score">
+                label="Length">
+                <template slot-scope="scope">
+                  <span>{{scope.row.length}} mer peptides</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="center"
+                width="100"
+                label="Detail">
+                <template slot-scope="scope">
+                  <el-button v-if="scope.row.status === '-1'" @click="LookAt(scope.row)" type="text" size="small">View</el-button>
+                </template>
               </el-table-column>
             </el-table>
             <div class="pagenation-wrap">
@@ -64,11 +75,12 @@
 <script>
 import {instance, API} from '../../api/api';
 import Vue from 'vue';
-import { Input, Table, TableColumn, Pagination, Message } from 'element-ui';
+import { Input, Table, TableColumn, Pagination, Message, Button } from 'element-ui';
 Vue.use(Input);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Pagination);
+Vue.use(Button);
 export default {
   name: 'Main',
   data () {
@@ -77,31 +89,29 @@ export default {
       menu: [
         {
           text: 'EPIC',
-          href: './client_index.html'
+          href: '#'
         },
+        // {
+        //   text: 'Submission',
+        //   href: './client_index.html'
+        // },
+        // {
+        //   text: 'Result',
+        //   href: './client_result.html'
+        // },
         {
-          text: 'Submission',
-          href: './client_index.html'
-        },
-        {
-          text: 'Result',
+          text: 'Cltation',
           href: '#'
         },
         {
-          text: 'Cltation',
-          href: './client_index.html'
-        },
-        {
           text: 'Help',
-          href: './client_index.html'
+          href: '#'
         }
       ],
       tableData: [],
       total: 0,
       pageSize: 20,
-      userinfo: {},
-      activeRow: {},
-      email: ''
+      userinfo: {}
     };
   },
   created () {
@@ -111,39 +121,9 @@ export default {
     this.getData();
   },
   methods: {
-    downLoad () {
-      if (this.email.trim() === '') {
-        return false;
-      }
-      if (this.activeRow && this.activeRow.sampleId) {
-        Message.error('暂无下载接口！');
-      } else {
-        Message.error('请选择要下载的结果！');
-      }
-    },
-    sendEmail () {
-      if (this.email.trim() === '') {
-        return false;
-      }
-      if (this.activeRow && this.activeRow.sampleId) {
-        instance.post(API.sendEmail, {
-          email: this.email,
-          sampleId: this.activeRow.sampleId
-        }).then(({data}) => {
-          if (data.success === 'true') {
-            Message.success('发送成功！');
-          } else {
-            Message.error('发送失败！');
-          }
-        }).catch(() => {
-          Message.error('异常错误,请稍后重试！');
-        });
-      } else {
-        Message.error('请选择要发送的结果！');
-      }
-    },
-    rowClick (row, event, column) {
-      this.activeRow = row;
+    LookAt (row) {
+      console.log(row);
+      location.href = `./manage_result.html?sampleId=${row.sampleId}`;
     },
     handleSizeChange (val) {
       this.pageSize = val;
