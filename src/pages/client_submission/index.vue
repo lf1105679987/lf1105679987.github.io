@@ -44,10 +44,22 @@
               </el-table-column>
               <el-table-column
                 align="center"
+                label="Status">
+                <template slot-scope="scope">
+                  <span>{{scope.row.status | filterStatus}}</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="center"
+                 prop="createTime"
+                label="Createtime">
+              </el-table-column>
+              <el-table-column
+                align="center"
                 width="100"
                 label="Detail">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.status === '-1'" @click="LookAt(scope.row)" type="text" size="small">View</el-button>
+                  <el-button v-if="scope.row.status === '-1'" @click="LookAt(scope.row)" type="text" size="small">查看结果</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -111,6 +123,16 @@ export default {
       pageSize: 20,
       userinfo: {}
     };
+  },
+  filters: {
+    filterStatus (val) {
+      const map = {
+        '0': '训练中',
+        '1': '成功',
+        '-1': '失败'
+      };
+      return map[val];
+    }
   },
   created () {
     this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};

@@ -6,6 +6,7 @@
     <!-- <a href="./manage_result1.html" target="_blank">管理端结果页1</a>
     <a href="./manage_result2.html" target="_blank">管理端结果页2</a> -->
     <a href="./manage_submission.html" target="_blank">管理端submission页面</a>
+    <a href="./manage_userlist.html" target="_blank">管理端用户列表页面</a>
   </div>
 </template>
 <script>

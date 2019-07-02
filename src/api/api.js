@@ -23,6 +23,9 @@ const API = {
   addSample: baseURL + '/sample/addSample',
   sampleList: baseURL + '/sample/search',
   sendEmail: baseURL + '/trainResult/sendMail',
-  trainResult: baseURL + '/trainResult/search'
+  trainResult: baseURL + '/trainResult/search',
+  forgetPwd: baseURL + '/user/forget',
+  updatePwd: baseURL + '/user/updatePwd',
+  updateUser: baseURL + '/user/update'
 };
 export {instance, API};

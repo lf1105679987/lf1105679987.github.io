@@ -102,7 +102,8 @@ export const getAlleleMap = () => {
     const label = `${item.split('-')[0]}-${value.substr(0, 1)}*${value.substr(1, 2)}:${value.substr(3, 2)}:(${value.substr(0, 3)})`;
     list.push({
       label: label,
-      value: value
+      value: value,
+      val: item
     });
   });
   return list;

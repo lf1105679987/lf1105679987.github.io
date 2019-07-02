@@ -6,56 +6,22 @@
         <Menu :data="menu"></Menu>
         <div class="container">
           <div class="top">
-            <span>Submission</span>
-            <!-- <div class="oprate-wrap"><div class="email">
-                <el-input
-                  size="mini"
-                  placeholder="Enter E-Mail"
-                  v-model="email"
-                  clearable>
-                </el-input>
-              </div>
-              <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
-              <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="downLoad">Download</span>
-            </div> -->
+            <span>User Management</span>
           </div>
           <div class="table-wrap">
             <el-table
               :data="tableData"
-              highlight-current-row
               border
               style="width: 100%">
               <el-table-column
                 align="center"
-                label="IP">
-                <template slot-scope="scope">
-                  <span>暂无ip字段</span>
-                </template>
+                prop="username"
+                label="UserName">
               </el-table-column>
               <el-table-column
                 align="center"
-                prop="sampleName"
-                label="SampleName">
-              </el-table-column>
-              <el-table-column
-                align="center"
-                prop="allele"
-                label="Allele">
-              </el-table-column>
-              <el-table-column
-                align="center"
-                label="Length">
-                <template slot-scope="scope">
-                  <span>{{scope.row.length}} mer peptides</span>
-                </template>
-              </el-table-column>
-              <el-table-column
-                align="center"
-                width="80"
-                label="Status">
-                <template slot-scope="scope">
-                  <span>{{scope.row.status | filterStatus}}</span>
-                </template>
+                prop="email"
+                label="Email">
               </el-table-column>
               <el-table-column
                 align="center"
@@ -65,10 +31,15 @@
               </el-table-column>
               <el-table-column
                 align="center"
-                width="100"
-                label="Detail">
+                prop="createTime"
+                width="180"
+                label="Last Active Time">
+              </el-table-column>
+              <el-table-column
+                align="center"
+                label="IP">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.status === '-1'" @click="LookAt(scope.row)" type="text" size="small">查看结果</el-button>
+                  <span>暂无ip字段{{scope.row.ip}}</span>
                 </template>
               </el-table-column>
             </el-table>

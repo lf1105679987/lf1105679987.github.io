@@ -112,9 +112,9 @@
                 <el-select v-model="value_1" placeholder="请选择" @change="changeAllele">
                   <el-option
                     v-for="item in options_1"
-                    :key="item.value"
+                    :key="item.val"
                     :label="item.label"
-                    :value="item.label">
+                    :value="item.val">
                   </el-option>
                 </el-select>
               </div>
@@ -213,7 +213,7 @@ export default {
       this.text2 = val;
     },
     changeAllele (val) {
-      this.options_2 = peptidesMap[val];
+      this.options_2 = peptidesMap[val.split('-')[1]];
     },
     Submit () {
       if (!this.userinfo.userId) {
