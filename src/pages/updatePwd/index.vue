@@ -17,6 +17,8 @@ import {
   Message
 } from 'element-ui';
 import {instance, API} from '../../api/api';
+import {getUrlParams} from '../../utils/utils';
+import { setTimeout } from 'timers';
 Vue.use(Input);
 Vue.use(Button);
 export default {
@@ -24,8 +26,12 @@ export default {
   data () {
     return {
       userPwd: '',
-      userPwds: ''
+      userPwds: '',
+      option: {}
     };
+  },
+  created () {
+    this.option = getUrlParams();
   },
   methods: {
     submit () {
@@ -40,12 +46,15 @@ export default {
         return Message.error('两次输入密码不一致！');
       }
       instance.post(API.updatePwd, {
-        userId: '',
+        userId: me.option.userId,
         password: me.userPwd,
-        identifier: ''
+        identifier: me.option.identifier
       }).then(({data = {}}) => {
         if (data.success === 'true') {
           Message.success('修改成功！');
+          setTimeout(() => {
+            window.close();
+          }, 1000);
         } else {
           Message.error(data.msg || '修改失败！');
         }

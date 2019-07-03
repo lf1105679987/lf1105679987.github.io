@@ -8,7 +8,7 @@
       <a href="javascript:;" v-show="!userinfo.userName" @click="toLogin">请登录</a>
       <a href="javascript:;" v-show="!userinfo.userName" @click="toRegister">请注册</a>
     </div>
-    <div class="login-shadow" v-show="showModal" @click.self="close">
+    <div class="login-shadow" v-show="showModal">
       <div class="login-container" :class="{max: type === 'register',min: type === 'forgetPwd'}">
         <div class="login-wrap">
           <div class="title">

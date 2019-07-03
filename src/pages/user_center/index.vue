@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="box">
       <div class="inner">
-        <el-input placeholder="请输入用户名" v-model="userName" clearable> </el-input>
+        <!-- <el-input placeholder="请输入用户名" v-model="userName" clearable> </el-input> -->
         <el-input type="password" placeholder="请输入新密码" v-model="userPwd" clearable></el-input>
         <el-input type="password" placeholder="请再次输入新密码" v-model="userPwds" clearable></el-input>
         <el-input placeholder="请输入邮箱" v-model="userEmail" clearable> </el-input>
@@ -26,7 +26,7 @@ export default {
   name: 'Main',
   data () {
     return {
-      userName: '',
+      // userName: '',
       userPwd: '',
       userPwds: '',
       userEmail: '',
@@ -39,9 +39,9 @@ export default {
   methods: {
     submit () {
       const me = this;
-      if (!me.userName.trim()) {
-        return Message.error('请输入用户名！');
-      }
+      // if (!me.userName.trim()) {
+      //   return Message.error('请输入用户名！');
+      // }
       if (!me.userPwd.trim()) {
         return Message.error('请输入密码！');
       }
@@ -54,20 +54,19 @@ export default {
       if (!me.userEmail.trim()) {
         return Message.error('请输入邮箱！');
       }
-      instance.post(API.updatePwd, {
+      instance.post(API.updateUser, {
         userId: me.userinfo.userId,
-        userName: me.userName,
+        // userName: me.userName,
         password: me.userPwd,
         email: me.userEmail
       }).then(({data = {}}) => {
         if (data.success === 'true') {
-          // @todo存储新的用户信息到本地
           Message.success('修改成功！');
           const newUserinfo = {
             userId: me.userinfo.userId,
-            userName: me.userName,
-            email: me.userEmail,
-            token: me.userinfo.token
+            userName: me.userinfo.userName,
+            token: me.userinfo.token,
+            email: me.userEmail
           };
           localStorage.setItem('userinfo', JSON.stringify(newUserinfo));
           setTimeout(() => {
