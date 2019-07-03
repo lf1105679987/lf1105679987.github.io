@@ -151,7 +151,6 @@ export default {
   },
   methods: {
     LookAt (row) {
-      console.log(row);
       location.href = `./manage_result.html?sampleId=${row.sampleId}`;
     },
     handleSizeChange (val) {
@@ -166,14 +165,17 @@ export default {
       const _this = this;
       const params = {
         userId: this.userinfo.userId,
+        userName: this.userinfo.userName,
         page: this.currentPage,
         pageSize: this.pageSize
       };
-      instance.post(API.sampleList, params).then(({data = {}}) => {
+      instance.post(API.sampleListManage, params).then(({data = {}}) => {
         if (data.success === 'true') {
           const result = data.data || {};
           _this.total = Number(result.totalRows || 0);
           _this.tableData = result.records || [];
+        } else {
+          Message.error(data.msg || '异常错误，请稍后重试！');
         }
       }).catch(() => {
         Message.error('异常错误，请稍后重试！');
@@ -182,6 +184,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-@import './index.scss';
-</style>

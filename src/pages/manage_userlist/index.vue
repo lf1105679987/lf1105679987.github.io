@@ -15,7 +15,7 @@
               style="width: 100%">
               <el-table-column
                 align="center"
-                prop="username"
+                prop="userName"
                 label="UserName">
               </el-table-column>
               <el-table-column
@@ -31,16 +31,14 @@
               </el-table-column>
               <el-table-column
                 align="center"
-                prop="createTime"
+                prop="lastLoginTime"
                 width="180"
                 label="Last Active Time">
               </el-table-column>
               <el-table-column
                 align="center"
+                prop="ip"
                 label="IP">
-                <template slot-scope="scope">
-                  <span>暂无ip字段{{scope.row.ip}}</span>
-                </template>
               </el-table-column>
             </el-table>
             <div class="pagenation-wrap">
@@ -137,14 +135,17 @@ export default {
       const _this = this;
       const params = {
         userId: this.userinfo.userId,
+        userName: this.userinfo.userName,
         page: this.currentPage,
         pageSize: this.pageSize
       };
-      instance.post(API.sampleList, params).then(({data = {}}) => {
+      instance.post(API.getUserList, params).then(({data = {}}) => {
         if (data.success === 'true') {
           const result = data.data || {};
           _this.total = Number(result.totalRows || 0);
           _this.tableData = result.records || [];
+        } else {
+          Message.error(data.msg || '异常错误，请稍后重试！');
         }
       }).catch(() => {
         Message.error('异常错误，请稍后重试！');
@@ -153,6 +154,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-@import './index.scss';
-</style>

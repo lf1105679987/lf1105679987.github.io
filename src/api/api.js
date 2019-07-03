@@ -18,14 +18,17 @@ const test = 'http://47.110.70.236:8010';
 const product = 'http://47.110.70.236:8010';
 const baseURL = process.env.NODE_ENV === 'development' ? test : product;
 const API = {
-  login: baseURL + '/user/login',
-  register: baseURL + '/user/register',
-  addSample: baseURL + '/sample/addSample',
-  sampleList: baseURL + '/sample/search',
-  sendEmail: baseURL + '/trainResult/sendMail',
-  trainResult: baseURL + '/trainResult/search',
-  forgetPwd: baseURL + '/user/forget',
-  updatePwd: baseURL + '/user/updatePwd',
-  updateUser: baseURL + '/user/update'
+  login: baseURL + '/user/login', // 登录
+  register: baseURL + '/user/register', // 注册
+  addSample: baseURL + '/sample/addSample', // 添加样本
+  sampleList: baseURL + '/sample/search', // 用户端样本列表
+  sampleListManage: baseURL + '/sample/selectCond', // 管理端样本列表
+  sendEmail: baseURL + '/trainResult/sendMail', // 训练结果发送邮件
+  trainResult: baseURL + '/trainResult/search', // 训练结果
+  forgetPwd: baseURL + '/user/forget', // 忘记密码
+  updatePwd: baseURL + '/user/updatePwd', // 更新密码
+  updateUser: baseURL + '/user/update', // 更新用户信息
+  getUserList: baseURL + '/user/search' // 获取用户列表
+  // getUserList: baseURL + '/user/search'
 };
 export {instance, API};

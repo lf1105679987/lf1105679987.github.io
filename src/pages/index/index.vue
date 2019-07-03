@@ -7,6 +7,8 @@
     <a href="./manage_result2.html" target="_blank">管理端结果页2</a> -->
     <a href="./manage_submission.html" target="_blank">管理端submission页面</a>
     <a href="./manage_userlist.html" target="_blank">管理端用户列表页面</a>
+    <a href="./updatePwd.html" target="_blank">修改密码</a>
+    <a href="./user_center.html" target="_blank">修改用户信息</a>
   </div>
 </template>
 <script>

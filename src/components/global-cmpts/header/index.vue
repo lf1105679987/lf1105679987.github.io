@@ -2,7 +2,7 @@
   <div class="header-wrap">
     <div class="logo"></div>
     <div class="login-box">
-      <a href="./user_center.html" v-show="userinfo.userName">用户中心</a>
+      <a href="./user_center.html" v-show="userinfo.userName" style="text-decoration:underline;">修改用户信息</a>
       <a href="javascript:;" v-show="userinfo.userName">您好，{{userinfo.userName}}!</a>
       <a href="javascript:;" v-show="userinfo.userName" @click="loginout">退出登录</a>
       <a href="javascript:;" v-show="!userinfo.userName" @click="toLogin">请登录</a>
@@ -109,7 +109,7 @@ export default {
       this.type = this.type === 'login' ? 'register' : 'login';
     },
     submit () {
-      var me = this;
+      const me = this;
       let params = {
         userName: me.userName || '',
         password: me.userPwd || ''
@@ -136,6 +136,7 @@ export default {
             localStorage.setItem('token', result.token);
             me.userinfo = userinfo;
             me.close();
+            window.location.reload();
           } else {
             Message.error(data.msg || '注册失败！');
           }
@@ -195,7 +196,7 @@ export default {
       float: left;
     }
     .login-box{
-      width: 200px;
+      width: 400px;
       height: 58px;
       float: right;
       line-height: 58px;
