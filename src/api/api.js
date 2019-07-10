@@ -14,10 +14,12 @@ instance.interceptors.request.use(config => {
 
 // test
 // http://47.110.70.236:8080
-const test = 'http://47.110.70.236:8080';
+// const test = 'http://127.0.0.1:8010';
 // product
-const product = 'http://47.110.70.236:8080';
-const baseURL = process.env.NODE_ENV === 'development' ? test : product;
+// const product = 'http://127.0.0.1:8010';
+debugger;
+// const baseURL = process.env.NODE_ENV === 'development' ? test : product;
+const baseURL = globalConfig.proxy;
 const API = {
   login: baseURL + '/user/login', // 登录
   register: baseURL + '/user/register', // 注册
