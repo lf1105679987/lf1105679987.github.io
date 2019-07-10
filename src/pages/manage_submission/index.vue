@@ -68,7 +68,7 @@
                 width="100"
                 label="Detail">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.status === '-1'" @click="LookAt(scope.row)" type="text" size="small">查看结果</el-button>
+                  <el-button v-if="scope.row.status === '1'" @click="LookAt(scope.row)" type="text" size="small">查看结果</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -106,10 +106,10 @@ export default {
     return {
       currentPage: 1,
       menu: [
-        {
-          text: 'EPIC',
-          href: '#'
-        },
+        // {
+        //   text: 'EPIC',
+        //   href: '#'
+        // },
         // {
         //   text: 'Submission',
         //   href: './client_index.html'
@@ -118,14 +118,14 @@ export default {
         //   text: 'Result',
         //   href: './client_result.html'
         // },
-        {
-          text: 'Cltation',
-          href: '#'
-        },
-        {
-          text: 'Help',
-          href: '#'
-        }
+        // {
+        //   text: 'Cltation',
+        //   href: '#'
+        // },
+        // {
+        //   text: 'Help',
+        //   href: '#'
+        // }
       ],
       tableData: [],
       total: 0,

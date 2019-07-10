@@ -75,10 +75,10 @@ export default {
     return {
       currentPage: 1,
       menu: [
-        {
-          text: 'EPIC',
-          href: '#'
-        },
+        // {
+        //   text: 'EPIC',
+        //   href: '#'
+        // },
         // {
         //   text: 'Submission',
         //   href: './client_index.html'
@@ -87,14 +87,14 @@ export default {
         //   text: 'Result',
         //   href: './client_result.html'
         // },
-        {
-          text: 'Cltation',
-          href: '#'
-        },
-        {
-          text: 'Help',
-          href: '#'
-        }
+        // {
+        //   text: 'Cltation',
+        //   href: '#'
+        // },
+        // {
+        //   text: 'Help',
+        //   href: '#'
+        // }
       ],
       tableData: [],
       total: 0,

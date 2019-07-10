@@ -81,6 +81,7 @@ export default {
           reader.readAsText(data[0]);
           reader.onload = function (e) {
             _this.text = e.target.result;
+            _this.outPutVal();
           };
         } else {
           Message.error('请拖入txt格式文本！');

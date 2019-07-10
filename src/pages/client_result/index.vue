@@ -78,7 +78,7 @@ export default {
       menu: [
         {
           text: 'EPIC',
-          href: '#'
+          href: './client_index.html#EPIC'
         },
         {
           text: 'Submission',
@@ -90,11 +90,11 @@ export default {
         // },
         {
           text: 'Cltation',
-          href: '#'
+          href: './client_index.html#Cltation'
         },
         {
           text: 'Help',
-          href: '#'
+          href: './client_index.html#Help'
         }
       ],
       tableData: [],
