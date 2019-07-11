@@ -3,11 +3,24 @@
     <div class="oDrop" ref=oDrop>
       <textarea v-model="text" @change="outPutVal" refs="outTextarea" :placeholder="placeholder"></textarea>
     </div>
-    <div class="tips" v-text="tips"></div>
+    <div class="box">
+      <el-upload
+        class="uploadWrap"
+        action="/"
+        :before-upload="beforUpload"
+        :limit="1"
+      >
+        <el-button size="mini" icon="el-icon-upload2">上传</el-button>
+      </el-upload>
+      <span class="tips" v-text="tips"></span>
+    </div>
   </div>
 </template>
 <script>
-import { Message } from 'element-ui';
+import Vue from 'vue';
+import { Message, Button, Upload } from 'element-ui';
+Vue.use(Button);
+Vue.use(Upload);
 export default {
   name: 'TextareaForDropTxt',
   props: {
@@ -17,7 +30,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: '输入或拖拽.txt文件至框内'
+      default: '输入或上传.txt文件至框内'
     },
     tips: {
       type: String,
@@ -35,40 +48,52 @@ export default {
     });
   },
   mounted () {
-    var _this = this;
-    window.onload = function () {
-      document.addEventListener('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }, false);
+    // var _this = this;
+    // window.onload = function () {
+    //   document.addEventListener('dragover', function (e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //   }, false);
 
-      document.addEventListener('drop', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }, false);
-    };
-    _this.$nextTick(function () {
-      var oDiv = _this.$refs.oDrop;
-      oDiv.addEventListener('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }, false);
+    //   document.addEventListener('drop', function (e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //   }, false);
+    // };
+    // _this.$nextTick(function () {
+    //   var oDiv = _this.$refs.oDrop;
+    //   oDiv.addEventListener('dragenter', function (e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //   }, false);
 
-      oDiv.addEventListener('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }, false);
+    //   oDiv.addEventListener('dragover', function (e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //   }, false);
 
-      oDiv.addEventListener('drop', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        var dt = e.dataTransfer;
-        var files = dt.files;
-        _this.handle('filelist', files);
-      }, false);
-    });
+    //   oDiv.addEventListener('drop', function (e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     var dt = e.dataTransfer;
+    //     var files = dt.files;
+    //     _this.handle('filelist', files);
+    //   }, false);
+    // });
   },
   methods: {
+    beforUpload (file) {
+      const name = file.name;
+      const index1 = name.lastIndexOf('.');
+      const index2 = name.length;
+      const suffix = name.substring(index1 + 1, index2);
+      if (suffix !== 'txt') {
+        Message.error('请上传txt文件类型');
+      } else {
+        this.handle('filelist', [file]);
+      }
+      return false;
+    },
     handle (type, data) {
       var _this = this;
       if (data && data.length) {
@@ -84,7 +109,7 @@ export default {
             _this.outPutVal();
           };
         } else {
-          Message.error('请拖入txt格式文本！');
+          Message.error('请上传txt格式文本！');
         }
       }
     },
@@ -108,6 +133,14 @@ export default {
         border: 1px solid #ddd;
         padding: 5px;
         box-sizing: border-box;
+      }
+    }
+
+    .box{
+      margin-top: 5px;
+      display: flex;
+      .uploadWrap{
+        margin-right: 5px;
       }
     }
     .tips{

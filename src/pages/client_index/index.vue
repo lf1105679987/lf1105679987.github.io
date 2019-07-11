@@ -14,7 +14,6 @@
               <div class="online">{{onLine.context}}</div>
             </div>
           </div>
-
           <div class="module">
             <div class="module-title" id="Submission">
               <div class="line"></div>
@@ -28,8 +27,32 @@
                 <div class="textarea-item">
                   <TextareaForDropTxt :change="changeText2" :tips="tips_2" :placeholder="placeholder_2"></TextareaForDropTxt>
                 </div>
-                <div class="submit" @click="Submit">Submit</div>
               </div>
+              <div class="select-wrap">
+                <div class="select-all-ele">Select Allele</div>
+                <div class="m-select m-select_1">
+                  <el-select v-model="value_1" placeholder="请选择" @change="changeAllele">
+                    <el-option
+                      v-for="item in options_1"
+                      :key="item.val"
+                      :label="item.label"
+                      :value="item.val">
+                    </el-option>
+                  </el-select>
+                </div>
+                <div class="m-select m-select_2">
+                  <el-select v-model="value_2" placeholder="请选择"  popper-class="m-select m-select_2">
+                    <el-option
+                      v-for="item in options_2"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
+
+              <div class="submit" @click="Submit">Submit</div>
             </div>
           </div>
 
@@ -99,39 +122,6 @@
 
         </div>
         <copyRight></copyRight>
-      </div>
-    </div>
-    <div class="shadow" :class="{show: showModal}" @click.stop="closeModal">
-      <div class="modal-wrap" @click.stop="() => {}">
-        <div class="modal-inner">
-          <div class="modal-title-wrap"></div>
-          <div class="modal-content-wrap">
-            <div class="select-wrap">
-              <div class="select-all-ele">Select Allele</div>
-              <div class="m-select m-select_1">
-                <el-select v-model="value_1" placeholder="请选择" @change="changeAllele">
-                  <el-option
-                    v-for="item in options_1"
-                    :key="item.val"
-                    :label="item.label"
-                    :value="item.val">
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="m-select m-select_2">
-                <el-select v-model="value_2" placeholder="请选择"  popper-class="m-select m-select_2">
-                  <el-option
-                    v-for="item in options_2"
-                    :key="item"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="submits" @click="Submits">Submit</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -224,8 +214,15 @@ export default {
         Message.error('请输入多肽和表达量！');
         return false;
       }
-      const text1 = this.text1.replace(/\n/g, '-');
-      const text2 = this.text2.replace(/\n/g, '-');
+      let text1 = this.text1.replace(/\n/g, '-');
+      let text2 = this.text2.replace(/\n/g, '-');
+      text1 = text1.replace(/\s/g, '');
+      text2 = text2.replace(/\s/g, '');
+      var reg = /[a-z]|U|B|J|O|Z|X/g;
+      if (reg.test(text1)) {
+        Message.error('多态输入格式有误，请重新输入!');
+        return false;
+      }
       const text1List = text1.split('-').filter(item => item.length);
       const text2List = text2.split('-').filter(item => item.length);
       if (text1List.length > 1000) {
@@ -238,7 +235,32 @@ export default {
         Message.error('请输入多肽数量与表达量数量一致！');
         return false;
       }
-      this.showModal = true;
+      if (!this.value_1 || !this.value_2) {
+        Message.error('请选择Allele和长度！');
+        return false;
+      }
+      const data = {
+        userId: this.userinfo.userId,
+        allele: this.value_1,
+        length: this.value_2,
+        polypeptides: text1List,
+        exps: text2List
+      };
+      const _this = this;
+      instance.post(API.addSample, data).then(({data = {}}) => {
+        if (data.success === 'true') {
+          Message.success('添加成功!');
+          _this.value_1 = '';
+          _this.value_2 = '';
+          _this.$bus.$emit('clearInput', {});
+          window.location.href = './client_submission.html';
+        } else {
+          Message.error(data.msg || '添加失败!');
+        }
+        _this.showModal = false;
+      }).catch(() => {
+        Message.error('异常错误，请稍后重试!');
+      });
     },
     Submits () {
       if (!this.value_1 || !this.value_2) {
