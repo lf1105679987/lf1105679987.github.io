@@ -17,7 +17,7 @@ instance.interceptors.request.use(config => {
 // const test = 'http://127.0.0.1:8010';
 // product
 // const product = 'http://127.0.0.1:8010';
-debugger;
+// debugger;
 // const baseURL = process.env.NODE_ENV === 'development' ? test : product;
 const baseURL = globalConfig.proxy;
 const API = {

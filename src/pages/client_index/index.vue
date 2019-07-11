@@ -247,8 +247,8 @@ export default {
       }
       const text1 = this.text1.replace(/\n/g, '-');
       const text2 = this.text2.replace(/\n/g, '-');
-      const text1List = text1.split('-');
-      const text2List = text2.split('-');
+      const text1List = text1.split('-').filter(item => item.length);
+      const text2List = text2.split('-').filter(item => item.length);
       const data = {
         userId: this.userinfo.userId,
         allele: this.value_1,

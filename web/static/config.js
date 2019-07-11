@@ -1,3 +1,3 @@
 var globalConfig = {
-  proxy: 'http://127.0.0.1:8012'
+  proxy: 'http://47.110.70.236:8010'
 }

@@ -101,10 +101,10 @@ export default {
           text: 'EPIC',
           href: './client_index.html#EPIC'
         },
-        // {
-        //   text: 'Submission',
-        //   href: './client_index.html'
-        // },
+        {
+          text: 'Submission',
+          href: 'javascript:;'
+        },
         // {
         //   text: 'Result',
         //   href: './client_result.html'
