@@ -217,7 +217,7 @@ export default {
     },
     Submit () {
       if (!this.userinfo.userId) {
-        this.$bus.$emit('openLogin', {a: 1});
+        this.$bus.$emit('openLogin');
         return false;
       }
       if (!this.text1.trim() || !this.text2.trim()) {
@@ -228,6 +228,12 @@ export default {
       const text2 = this.text2.replace(/\n/g, '-');
       const text1List = text1.split('-');
       const text2List = text2.split('-');
+      if (text1List.length > 1000) {
+        Message.error('输入多肽数量应小于1000条');
+      }
+      if (text2List.length > 1000) {
+        Message.error('输入表达量应小于1000条');
+      }
       if (text1List.length !== text2List.length) {
         Message.error('请输入多肽数量与表达量数量一致！');
         return false;
