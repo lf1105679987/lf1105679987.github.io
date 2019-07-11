@@ -253,7 +253,9 @@ export default {
           _this.value_1 = '';
           _this.value_2 = '';
           _this.$bus.$emit('clearInput', {});
-          window.location.href = './client_submission.html';
+          setTimeout(() => {
+            window.location.href = './client_submission.html';
+          }, 1000);
         } else {
           Message.error(data.msg || '添加失败!');
         }
