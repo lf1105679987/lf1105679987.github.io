@@ -59,7 +59,7 @@
                 width="100"
                 label="Detail">
                 <template slot-scope="scope">
-                  <el-button v-if="scope.row.status === '1'" @click="LookAt(scope.row)" type="text" size="small">查看结果</el-button>
+                  <el-button v-if="scope.row.status === '1'" @click="LookAt(scope.row)" type="text">detail</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -127,9 +127,9 @@ export default {
   filters: {
     filterStatus (val) {
       const map = {
-        '0': '训练中',
-        '1': '成功',
-        '-1': '失败'
+        '0': 'training',
+        '1': 'success',
+        '-1': 'failed'
       };
       return map[val];
     }
