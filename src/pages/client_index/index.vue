@@ -11,7 +11,7 @@
               <div class="title">{{onLine.module}}</div>
             </div>
             <div class="module-content pdlr">
-              <div class="online">{{onLine.context}}</div>
+              <div class="online" v-html="onLine.context"></div>
             </div>
           </div>
           <div class="module">
@@ -29,9 +29,9 @@
                 </div>
               </div>
               <div class="select-wrap">
-                <div class="select-all-ele">Select Allele</div>
+                <div class="select-all-ele">Select allele and peptide length</div>
                 <div class="m-select m-select_1">
-                  <el-select v-model="value_1" placeholder="请选择" @change="changeAllele">
+                  <el-select v-model="value_1" placeholder="Please Select" @change="changeAllele">
                     <el-option
                       v-for="item in options_1"
                       :key="item.val"
@@ -41,7 +41,7 @@
                   </el-select>
                 </div>
                 <div class="m-select m-select_2">
-                  <el-select v-model="value_2" placeholder="请选择"  popper-class="m-select m-select_2">
+                  <el-select v-model="value_2" placeholder="Please Select"  popper-class="m-select m-select_2">
                     <el-option
                       v-for="item in options_2"
                       :key="item"
@@ -57,7 +57,7 @@
           </div>
 
           <div class="module">
-            <div class="module-title" id="Cltation">
+            <div class="module-title" id="Citation">
               <div class="line"></div>
               <div class="title">{{citaions.module}}</div>
             </div>
@@ -92,7 +92,7 @@
                       </td>
                       <td>
                         <div class="download">
-                          <a :href="item.download">Download</a>
+                          <a :href="item.download">Data download</a>
                         </div>
                       </td>
                     </tr>
@@ -106,14 +106,14 @@
           <div class="module">
             <div class="module-title">
               <div class="line"></div>
-              <div class="title">Design by:</div>
+              <div class="title">Supported by:</div>
             </div>
             <div class="module-content pdlr">
               <div class="design-wrap">
-                <a href="#">
+                <a href="http://www.genomics.cn/" target="_blank">
                   <img src="./images/a1.jpg" alt="">
                 </a>
-                <a href="#">
+                <a href="http://genoimmune.genomics.cn/" target="_blank">
                   <img src="./images/a2.jpg" alt="">
                 </a>
               </div>
@@ -158,8 +158,8 @@ export default {
         //   href: './client_result.html'
         // },
         {
-          text: 'Cltation',
-          href: '#Cltation'
+          text: 'Citation',
+          href: '#Citation'
         },
         {
           text: 'Help',
@@ -169,10 +169,10 @@ export default {
       onLine: config.onLine,
       citaions: config.citaions,
       help: config.help,
-      placeholder_1: '输入多肽/上传多肽.txt文件',
-      tips_1: '* 多肽数量应小于1000条',
-      placeholder_2: '输入表达量/上传表达量.txt文件',
-      tips_2: '* 表达量应跟多肽数量对应',
+      placeholder_1: 'Input peptides/ upload peptide file (txt format)',
+      tips_1: '* the number of peptides should not be more than 1000',
+      placeholder_2: 'Input expression values/ upload expression file (txt format)',
+      tips_2: '* the expression value should be matched to corresponding peptide.',
       text1: '',
       text2: '',
       options_1: getAlleleMap(),
@@ -189,7 +189,6 @@ export default {
     let self = this;
     this.$nextTick(function () {
       document.addEventListener('keyup', function (e) {
-      // 此处填写你的业务逻辑即可
         if (e.keyCode == 27) {
           self.closeModal();
         }
@@ -211,8 +210,12 @@ export default {
         this.$bus.$emit('openLogin');
         return false;
       }
-      if (!this.text1.trim() || !this.text2.trim()) {
-        Message.error('请输入多肽和表达量！');
+      if (!this.text1.trim()) {
+        Message.error(this.placeholder_1);
+        return false;
+      }
+      if (!this.text2.trim()) {
+        Message.error(this.placeholder_2);
         return false;
       }
       let text1 = this.text1.replace(/\n/g, '-');
@@ -221,23 +224,23 @@ export default {
       text2 = text2.replace(/\s/g, '');
       var reg = /[a-z]|U|B|J|O|Z|X/g;
       if (reg.test(text1)) {
-        Message.error('多态输入格式有误，请重新输入!');
+        Message.error('Input peptides format error, please enter again !');
         return false;
       }
       const text1List = text1.split('-').filter(item => item.length);
       const text2List = text2.split('-').filter(item => item.length);
       if (text1List.length > 1000) {
-        Message.error('输入多肽数量应小于1000条');
+        Message.error(this.tips_1);
       }
       if (text2List.length > 1000) {
-        Message.error('输入表达量应小于1000条');
+        Message.error(this.tips_2);
       }
       if (text1List.length !== text2List.length) {
-        Message.error('请输入多肽数量与表达量数量一致！');
+        Message.error('Please ensure that the input lengths of peptides and expression are the same.');
         return false;
       }
       if (!this.value_1 || !this.value_2) {
-        Message.error('请选择Allele和长度！');
+        Message.error('please select allele and length !');
         return false;
       }
       const data = {
@@ -250,7 +253,7 @@ export default {
       const _this = this;
       instance.post(API.addSample, data).then(({data = {}}) => {
         if (data.success === 'true') {
-          Message.success('添加成功!');
+          Message.success('Successful !');
           _this.value_1 = '';
           _this.value_2 = '';
           _this.$bus.$emit('clearInput', {});
@@ -258,16 +261,16 @@ export default {
             window.location.href = './client_submission.html';
           }, 1000);
         } else {
-          Message.error(data.msg || '添加失败!');
+          Message.error(data.msg || 'Failed !');
         }
         _this.showModal = false;
       }).catch(() => {
-        Message.error('异常错误，请稍后重试!');
+        Message.error('System error, Please try again later!');
       });
     },
     Submits () {
       if (!this.value_1 || !this.value_2) {
-        Message.error('请选择！');
+        Message.error('Please Select !');
         return false;
       }
       const text1 = this.text1.replace(/\n/g, '-');
@@ -284,16 +287,16 @@ export default {
       const _this = this;
       instance.post(API.addSample, data).then(({data = {}}) => {
         if (data.success === 'true') {
-          Message.success('添加成功!');
+          Message.success('Successful!');
           _this.value_1 = '';
           _this.value_2 = '';
           _this.$bus.$emit('clearInput', {});
         } else {
-          Message.error(data.msg || '添加失败!');
+          Message.error(data.msg || 'Failed !');
         }
         _this.showModal = false;
       }).catch(() => {
-        Message.error('异常错误，请稍后重试!');
+        Message.error('System error, Please try again later!');
       });
     },
     closeModal () {

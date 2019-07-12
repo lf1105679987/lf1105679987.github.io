@@ -62,7 +62,7 @@ export default {
         email: me.userEmail
       }).then(({data = {}}) => {
         if (data.success === 'true') {
-          Message.success('修改成功！');
+          Message.success('Successful !');
           const newUserinfo = {
             userId: me.userinfo.userId,
             userName: me.userinfo.userName,
@@ -74,10 +74,10 @@ export default {
             window.history.back();
           }, 1000);
         } else {
-          Message.error(data.msg || '修改失败！');
+          Message.error(data.msg || 'Failed !');
         }
       }).catch(() => {
-        Message.error('异常错误，请稍后重试！');
+        Message.error('System error, Please try again later!');
       });
     }
   }

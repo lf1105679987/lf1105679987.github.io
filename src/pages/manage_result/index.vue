@@ -90,7 +90,7 @@ export default {
         //   href: '#'
         // },
         // {
-        //   text: 'Cltation',
+        //   text: 'Citation',
         //   href: '#'
         // },
         // {
@@ -134,15 +134,15 @@ export default {
           sampleId: this.activeRow.sampleId
         }).then(({data}) => {
           if (data.success === 'true') {
-            Message.success('发送成功！');
+            Message.success('Successful !');
           } else {
-            Message.error('发送失败！');
+            Message.error('Failed !');
           }
         }).catch(() => {
-          Message.error('异常错误,请稍后重试！');
+          Message.error('System error, Please try again later!');
         });
       } else {
-        Message.error('请选择要发送的结果！');
+        Message.error('Please select the result to send!');
       }
     },
     rowClick (row, event, column) {
@@ -169,10 +169,10 @@ export default {
           _this.total = Number(result.totalRows || 0);
           _this.tableData = result.records || [];
         } else {
-          Message.error(data.msg || '异常错误，请稍后重试！');
+          Message.error('System error, Please try again later!');
         }
       }).catch(() => {
-        Message.error('异常错误，请稍后重试！');
+        Message.error('System error, Please try again later!');
       });
     }
   }

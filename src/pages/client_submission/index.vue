@@ -111,8 +111,8 @@ export default {
         //   href: './client_result.html'
         // },
         {
-          text: 'Cltation',
-          href: './client_index.html#Cltation'
+          text: 'Citation',
+          href: './client_index.html#Citation'
         },
         {
           text: 'Help',
@@ -167,7 +167,7 @@ export default {
           _this.tableData = result.records || [];
         }
       }).catch(() => {
-        Message.error('异常错误，请稍后重试！');
+        Message.error('System error, Please try again later!');
       });
     }
   }

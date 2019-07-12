@@ -89,8 +89,8 @@ export default {
         //   href: '#'
         // },
         {
-          text: 'Cltation',
-          href: './client_index.html#Cltation'
+          text: 'Citation',
+          href: './client_index.html#Citation'
         },
         {
           text: 'Help',
@@ -118,9 +118,9 @@ export default {
         return false;
       }
       if (this.activeRow && this.activeRow.sampleId) {
-        Message.error('暂无下载接口！');
+        Message.error('Download is not supported');
       } else {
-        Message.error('请选择要下载的结果！');
+        Message.error('Please select the result to download!');
       }
     },
     sendEmail () {
@@ -133,15 +133,15 @@ export default {
           sampleId: this.activeRow.sampleId
         }).then(({data}) => {
           if (data.success === 'true') {
-            Message.success('发送成功！');
+            Message.success('Successful !');
           } else {
-            Message.error('发送失败！');
+            Message.error('Failed !');
           }
         }).catch(() => {
-          Message.error('异常错误,请稍后重试！');
+          Message.error('System error, Please try again later!');
         });
       } else {
-        Message.error('请选择要发送的结果！');
+        Message.error('Please select the result to send!');
       }
     },
     rowClick (row, event, column) {
@@ -169,7 +169,7 @@ export default {
           _this.tableData = result.records || [];
         }
       }).catch(() => {
-        Message.error('异常错误，请稍后重试！');
+        Message.error('System error, Please try again later!');
       });
     }
   }

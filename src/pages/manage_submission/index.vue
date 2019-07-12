@@ -120,7 +120,7 @@ export default {
         //   href: './client_result.html'
         // },
         // {
-        //   text: 'Cltation',
+        //   text: 'Citation',
         //   href: '#'
         // },
         // {
@@ -176,10 +176,10 @@ export default {
           _this.total = Number(result.totalRows || 0);
           _this.tableData = result.records || [];
         } else {
-          Message.error(data.msg || '异常错误，请稍后重试！');
+          Message.error('System error, Please try again later!');
         }
       }).catch(() => {
-        Message.error('异常错误，请稍后重试！');
+        Message.error('System error, Please try again later!');
       });
     }
   }

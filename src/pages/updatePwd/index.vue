@@ -2,9 +2,9 @@
   <div class="wrap">
     <div class="box">
       <div class="inner">
-        <el-input type="password" placeholder="请输入新密码" v-model="userPwd" clearable></el-input>
-        <el-input type="password" placeholder="请再次输入新密码" v-model="userPwds" clearable></el-input>
-        <el-button @click="submit" type="primary">提交修改</el-button>
+        <el-input type="password" placeholder="Enter your new password" v-model="userPwd" clearable></el-input>
+        <el-input type="password" placeholder="Enter your new password again" v-model="userPwds" clearable></el-input>
+        <el-button @click="submit" type="primary">submit</el-button>
       </div>
     </div>
   </div>
@@ -37,13 +37,13 @@ export default {
     submit () {
       const me = this;
       if (!me.userPwd.trim()) {
-        return Message.error('请输入新密码！');
+        return Message.error('Please enter user password !');
       }
       if (!me.userPwds.trim()) {
-        return Message.error('请再次输入新密码！');
+        return Message.error('Please enter your password again !');
       }
       if (me.userPwd !== me.userPwds) {
-        return Message.error('两次输入密码不一致！');
+        return Message.error('The two passwords are inconsistent !');
       }
       instance.post(API.updatePwd, {
         userId: me.option.userId,
@@ -51,15 +51,15 @@ export default {
         identifier: me.option.identifier
       }).then(({data = {}}) => {
         if (data.success === 'true') {
-          Message.success('修改成功！');
+          Message.success('Successful !');
           setTimeout(() => {
             window.close();
           }, 1000);
         } else {
-          Message.error(data.msg || '修改失败！');
+          Message.error(data.msg || 'Failed !');
         }
       }).catch(() => {
-        Message.error('异常错误，请稍后重试！');
+        Message.error('System error, Please try again later!');
       });
     }
   }

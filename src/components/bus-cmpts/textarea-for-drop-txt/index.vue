@@ -10,7 +10,7 @@
         :before-upload="beforUpload"
         :limit="1"
       >
-        <el-button size="mini" icon="el-icon-upload2">上传</el-button>
+        <el-button size="mini" icon="el-icon-upload2">upload</el-button>
       </el-upload>
       <span class="tips" v-text="tips"></span>
     </div>
@@ -30,7 +30,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: '输入或上传.txt文件至框内'
+      default: ''
     },
     tips: {
       type: String,
@@ -88,7 +88,7 @@ export default {
       const index2 = name.length;
       const suffix = name.substring(index1 + 1, index2);
       if (suffix !== 'txt') {
-        Message.error('请上传txt文件类型');
+        Message.error('Please upload a txt file');
       } else {
         this.handle('filelist', [file]);
       }
@@ -109,7 +109,7 @@ export default {
             _this.outPutVal();
           };
         } else {
-          Message.error('请上传txt格式文本！');
+          Message.error('Please upload a txt file');
         }
       }
     },
