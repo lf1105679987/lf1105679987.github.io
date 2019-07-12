@@ -1,8 +1,10 @@
 
 import axios from 'axios';
+import { CookieUtil } from '../utils/utils';
 const instance = axios.create();
 instance.interceptors.request.use(config => {
-  config.headers['Authorization'] = localStorage.getItem('token');
+  const my_token = CookieUtil.get('my_token');
+  config.headers['Authorization'] = my_token;
   return config;
 });
 

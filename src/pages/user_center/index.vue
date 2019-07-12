@@ -20,6 +20,7 @@ import {
 } from 'element-ui';
 import {instance, API} from '../../api/api';
 import { setTimeout } from 'timers';
+import { getUserInfo } from '../../utils/utils';
 Vue.use(Input);
 Vue.use(Button);
 export default {
@@ -34,7 +35,7 @@ export default {
     };
   },
   created () {
-    this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
+    this.userinfo = getUserInfo();
   },
   methods: {
     submit () {

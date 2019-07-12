@@ -95,6 +95,7 @@
 import {instance, API} from '../../api/api';
 import Vue from 'vue';
 import { Input, Table, TableColumn, Pagination, Message, Button } from 'element-ui';
+import { getUserInfo } from '../../utils/utils';
 Vue.use(Input);
 Vue.use(Table);
 Vue.use(TableColumn);
@@ -136,7 +137,7 @@ export default {
   filters: {
     filterStatus (val) {
       const map = {
-        '0': 'training',
+        '0': 'processing',
         '1': 'success',
         '-1': 'failed'
       };
@@ -144,7 +145,7 @@ export default {
     }
   },
   created () {
-    this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
+    this.userinfo = getUserInfo();
   },
   mounted () {
     this.getData();

@@ -48,6 +48,7 @@ import {
   Message
 } from 'element-ui';
 import {instance, API} from '../../../api/api';
+import { CookieUtil, getUserInfo } from '../../../utils/utils';
 Vue.use(Input);
 Vue.use(Button);
 export default {
@@ -71,7 +72,7 @@ export default {
   },
   mounted () {
     const me = this;
-    const userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
+    const userinfo = getUserInfo();
     this.userinfo = userinfo;
     me.$nextTick(function () {
       document.addEventListener('keyup', function (e) {
@@ -87,6 +88,8 @@ export default {
     },
     loginout () {
       localStorage.removeItem('userinfo');
+      CookieUtil.unset('my_token');
+      CookieUtil.unset('userinfo');
       this.userinfo = {};
     },
     toRegister () {
@@ -129,11 +132,11 @@ export default {
           if (data.success === 'true') {
             const userinfo = {
               userName: params.userName,
-              token: result.token,
               userId: result.userId
             };
+            CookieUtil.set('my_token', result.token, result.valid - 3600 * 1000);
+            CookieUtil.set('userinfo', JSON.stringify(userinfo));
             localStorage.setItem('userinfo', JSON.stringify(userinfo));
-            localStorage.setItem('token', result.token);
             me.userinfo = userinfo;
             me.close();
             window.location.reload();

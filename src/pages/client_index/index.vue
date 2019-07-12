@@ -132,6 +132,7 @@ import TextareaForDropTxt from '@/components/bus-cmpts/textarea-for-drop-txt';
 import Vue from 'vue';
 import { Select, Option, Button, Message } from 'element-ui';
 import {instance, API} from '../../api/api';
+import { getUserInfo } from '../../utils/utils';
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Button);
@@ -182,7 +183,7 @@ export default {
     };
   },
   created () {
-    this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
+    this.userinfo = getUserInfo();
   },
   mounted () {
     let self = this;

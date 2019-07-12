@@ -63,7 +63,7 @@
 </template>
 <script>
 import {instance, API} from '../../api/api';
-import { getUrlParams } from '../../utils/utils';
+import { getUrlParams, getUserInfo } from '../../utils/utils';
 import Vue from 'vue';
 import { Input, Table, TableColumn, Pagination, Message } from 'element-ui';
 Vue.use(Input);
@@ -106,7 +106,7 @@ export default {
     };
   },
   created () {
-    this.userinfo = JSON.parse(localStorage.getItem('userinfo')) || {};
+    this.userinfo = getUserInfo();
     this.option = getUrlParams();
   },
   mounted () {
