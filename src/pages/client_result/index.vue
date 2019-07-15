@@ -16,7 +16,7 @@
                 </el-input>
               </div>
               <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
-              <div class="oprate-btn" :class="{disabled: email.trim() === '' || !activeRow.sampleId}"  @click="downLoad">Download
+              <div class="oprate-btn" @click="downLoad">Download
                 <!-- <form :action="action" method="post" target="_blank">
                   <input name="sampleId" type="hidden" :value="activeRow.sampleId" style="display: none">
                   <input class="submitBtn" type="submit" :disabled=" email.trim() === '' || !activeRow.sampleId" value="Download">
@@ -39,8 +39,8 @@
               </el-table-column>
               <el-table-column
                 align="center"
-                prop="present"
-                label="Typeing">
+                prop="allele"
+                label="Allele">
               </el-table-column>
               <el-table-column
                 align="center"
@@ -122,52 +122,40 @@ export default {
   },
   methods: {
     downLoad () {
-      if (this.email.trim() === '') {
-        return false;
-      }
-      if (this.activeRow && this.activeRow.sampleId) {
-        // Message.error('Download is not supported');
-        post(API.downLoadResult, {
-          email: this.email,
-          sampleId: this.activeRow.sampleId
-        }).then(({data = {}}) => {
-          const blob = new Blob([data]);
-          const fileName = `result${String(Math.random()).split('.')[1]}.txt`;
-          if ('download' in document.createElement('a')) { // 非IE下载
-            const elink = document.createElement('a');
-            elink.download = fileName;
-            elink.style.display = 'none';
-            elink.href = URL.createObjectURL(blob);
-            document.body.appendChild(elink);
-            elink.click();
-            URL.revokeObjectURL(elink.href); // 释放URL 对象
-            document.body.removeChild(elink);
-          } else { // IE10+下载
-            navigator.msSaveBlob(blob, fileName);
-          }
-        });
-      } else {
-        Message.error('Please select the result to download!');
-      }
+      post(API.downLoadResult, {
+        email: this.email,
+        sampleId: this.activeRow.sampleId
+      }).then(({data = {}}) => {
+        const blob = new Blob([data]);
+        const fileName = `result${String(Math.random()).split('.')[1]}.txt`;
+        if ('download' in document.createElement('a')) { // 非IE下载
+          const elink = document.createElement('a');
+          elink.download = fileName;
+          elink.style.display = 'none';
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          URL.revokeObjectURL(elink.href); // 释放URL 对象
+          document.body.removeChild(elink);
+        } else { // IE10+下载
+          navigator.msSaveBlob(blob, fileName);
+        }
+      });
     },
     sendEmail () {
       if (this.email.trim() === '') {
         return false;
       }
-      if (this.activeRow && this.activeRow.sampleId) {
-        post(API.sendEmail, {
-          email: this.email,
-          sampleId: this.activeRow.sampleId
-        }).then(({data}) => {
-          if (data.success === 'true') {
-            Message.success('Successful !');
-          } else {
-            Message.error('Failed !');
-          }
-        });
-      } else {
-        Message.error('Please select the result to send!');
-      }
+      post(API.sendEmail, {
+        email: this.email,
+        sampleId: this.activeRow.sampleId
+      }).then(({data}) => {
+        if (data.success === 'true') {
+          Message.success('Successful !');
+        } else {
+          Message.error('Failed !');
+        }
+      });
     },
     rowClick (row, event, column) {
       this.activeRow = row;
