@@ -1,11 +1,19 @@
 
 import axios from 'axios';
 import { CookieUtil } from '../utils/utils';
+import Vue from 'vue';
+import { Message } from 'element-ui';
 const instance = axios.create();
 instance.interceptors.request.use(config => {
   const my_token = CookieUtil.get('my_token');
-  config.headers['Authorization'] = my_token;
-  return config;
+  if (my_token) {
+    config.headers['Authorization'] = my_token;
+    return config;
+  } else {
+    return Promise.reject(new Error('un_login'));
+  }
+}, err => {
+  return Promise.reject(err);
 });
 
 // instance.interceptors.response.use(function (response) {
@@ -19,7 +27,6 @@ instance.interceptors.request.use(config => {
 // const test = 'http://127.0.0.1:8010';
 // product
 // const product = 'http://127.0.0.1:8010';
-// debugger;
 // const baseURL = process.env.NODE_ENV === 'development' ? test : product;
 const baseURL = globalConfig.proxy;
 const API = {
@@ -36,4 +43,18 @@ const API = {
   updateUser: baseURL + '/user/update', // 更新用户信息
   getUserList: baseURL + '/user/search' // 获取用户列表
 };
-export {instance, API};
+const post = (url, data) => {
+  return new Promise((resolve, reject) => {
+    instance.post(url, data).then(res => {
+      resolve(res);
+    }).catch(err => {
+      if (err.message === 'un_login') {
+        Vue.prototype.$bus.$emit('openLogin');
+      } else {
+        Message.error('System error, Please try again later!');
+      }
+      reject(err);
+    });
+  });
+};
+export {instance, API, post};

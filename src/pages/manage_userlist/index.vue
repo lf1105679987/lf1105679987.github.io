@@ -11,6 +11,7 @@
           <div class="table-wrap">
             <el-table
               :data="tableData"
+              empty-text="no data"
               border
               style="width: 100%">
               <el-table-column

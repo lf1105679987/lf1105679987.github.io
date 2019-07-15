@@ -2,11 +2,10 @@
   <div class="wrap">
     <div class="box">
       <div class="inner">
-        <!-- <el-input placeholder="请输入用户名" v-model="userName" clearable> </el-input> -->
-        <el-input type="password" placeholder="请输入新密码" v-model="userPwd" clearable></el-input>
-        <el-input type="password" placeholder="请再次输入新密码" v-model="userPwds" clearable></el-input>
-        <el-input placeholder="请输入邮箱" v-model="userEmail" clearable> </el-input>
-        <el-button @click="submit" type="primary">提交修改</el-button>
+        <el-input type="password" placeholder="Enter your new password" v-model="userPwd" clearable></el-input>
+        <el-input type="password" placeholder="Enter your new password again" v-model="userPwds" clearable></el-input>
+        <el-input placeholder="Enter your email" v-model="userEmail" clearable> </el-input>
+        <el-button @click="submit" type="primary">Submit</el-button>
       </div>
     </div>
   </div>

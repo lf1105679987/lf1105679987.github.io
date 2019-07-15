@@ -26,6 +26,7 @@
           </div>
           <div class="table-wrap">
             <el-table
+              empty-text="no data"
               :data="tableData"
               @row-click="rowClick"
               highlight-current-row
@@ -67,7 +68,7 @@
   </div>
 </template>
 <script>
-import {instance, API} from '../../api/api';
+import {API, post} from '../../api/api';
 import { getUrlParams, getUserInfo } from '../../utils/utils';
 import Vue from 'vue';
 import { Input, Table, TableColumn, Pagination, Message } from 'element-ui';
@@ -126,12 +127,12 @@ export default {
       }
       if (this.activeRow && this.activeRow.sampleId) {
         // Message.error('Download is not supported');
-        instance.post(API.downLoadResult, {
+        post(API.downLoadResult, {
           email: this.email,
           sampleId: this.activeRow.sampleId
         }).then(({data = {}}) => {
           const blob = new Blob([data]);
-          const fileName = 'download.xlsx';
+          const fileName = `result${String(Math.random()).split('.')[1]}.txt`;
           if ('download' in document.createElement('a')) { // 非IE下载
             const elink = document.createElement('a');
             elink.download = fileName;
@@ -154,7 +155,7 @@ export default {
         return false;
       }
       if (this.activeRow && this.activeRow.sampleId) {
-        instance.post(API.sendEmail, {
+        post(API.sendEmail, {
           email: this.email,
           sampleId: this.activeRow.sampleId
         }).then(({data}) => {
@@ -163,8 +164,6 @@ export default {
           } else {
             Message.error('Failed !');
           }
-        }).catch(() => {
-          Message.error('System error, Please try again later!');
         });
       } else {
         Message.error('Please select the result to send!');
@@ -188,14 +187,12 @@ export default {
         page: this.currentPage,
         pageSize: this.pageSize
       };
-      instance.post(API.trainResult, params).then(({data = {}}) => {
+      post(API.trainResult, params).then(({data = {}}) => {
         if (data.success === 'true') {
           const result = data.data || {};
           _this.total = Number(result.totalRows || 0);
           _this.tableData = result.records || [];
         }
-      }).catch(() => {
-        Message.error('System error, Please try again later!');
       });
     }
   }

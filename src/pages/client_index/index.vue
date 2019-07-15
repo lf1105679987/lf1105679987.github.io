@@ -31,7 +31,7 @@
               <div class="select-wrap">
                 <div class="select-all-ele">Select allele and peptide length</div>
                 <div class="m-select m-select_1">
-                  <el-select v-model="value_1" placeholder="Please Select" @change="changeAllele">
+                  <el-select no-data-text="no data" v-model="value_1" placeholder="Please Select" @change="changeAllele">
                     <el-option
                       v-for="item in options_1"
                       :key="item.val"
@@ -41,7 +41,7 @@
                   </el-select>
                 </div>
                 <div class="m-select m-select_2">
-                  <el-select v-model="value_2" placeholder="Please Select"  popper-class="m-select m-select_2">
+                  <el-select no-data-text="no data" v-model="value_2" placeholder="Please Select" popper-class="m-select m-select_2">
                     <el-option
                       v-for="item in options_2"
                       :key="item"
@@ -68,7 +68,7 @@
                   <div v-for="(p, i) in item.content" :key="i" v-text="p"></div>
                   <div class="relative-wrap">
                     <span v-if="item.relative.panel" v-text="item.relative.panel"></span>
-                    <a v-for="(r, j) in item.relative.hrefs" :key="j" v-text="r.text" :href="r.href"></a>
+                    <a v-for="(r, j) in item.relative.hrefs" :key="j" v-text="r.text" :href="r.href" download="" title="download"></a>
                   </div>
                 </li>
               </ul>
@@ -92,7 +92,7 @@
                       </td>
                       <td>
                         <div class="download">
-                          <a :href="item.download">Data download</a>
+                          <a :href="item.download" download="" title="download">Data download</a>
                         </div>
                       </td>
                     </tr>

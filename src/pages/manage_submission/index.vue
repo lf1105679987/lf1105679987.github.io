@@ -22,6 +22,7 @@
           <div class="table-wrap">
             <el-table
               :data="tableData"
+              empty-text="no data"
               highlight-current-row
               border
               style="width: 100%">

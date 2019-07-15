@@ -1,6 +1,9 @@
 <template>
   <div class="header-wrap">
-    <div class="logo"></div>
+    <div class="logo">
+      <div class="logo-img"></div>
+      <div class="logo-text">EPIP Online</div>
+    </div>
     <div class="login-box">
       <a href="./user_center.html" v-show="userinfo.userName" style="text-decoration:underline;">User Information</a>
       <a href="javascript:;" v-show="userinfo.userName">Hello, {{userinfo.userName}}!</a>
@@ -193,11 +196,22 @@ export default {
     background: #fff;
     overflow: hidden;
     .logo{
-      height: 58px;
-      width: 380px;
-      background: url(../../../static/images/logo.jpg) no-repeat center;
-      background-size: 380px 58px;
       float: left;
+      display: flex;
+      .logo-img{
+        height: 58px;
+        width: 175px;
+        background: url(../../../static/images/logo.jpg) no-repeat center;
+        background-size: 380px 58px;
+        background-position: 0% 0%;
+        overflow: hidden;
+      }
+      .logo-text{
+        font-size: 30px;
+        font-weight: bold;
+        color: #2994d3;
+        line-height: 58px;
+      }
     }
     .login-box{
       width: 400px;

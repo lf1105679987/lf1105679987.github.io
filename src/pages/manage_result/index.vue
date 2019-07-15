@@ -22,6 +22,7 @@
           <div class="table-wrap">
             <el-table
               :data="tableData"
+              empty-text="no data"
               @row-click="rowClick"
               highlight-current-row
               border
@@ -62,7 +63,7 @@
   </div>
 </template>
 <script>
-import {instance, API} from '../../api/api';
+import {post, API} from '../../api/api';
 import { getUrlParams, getUserInfo } from '../../utils/utils';
 import Vue from 'vue';
 import { Input, Table, TableColumn, Pagination, Message } from 'element-ui';
@@ -119,7 +120,7 @@ export default {
         return false;
       }
       if (this.activeRow && this.activeRow.sampleId) {
-        instance.post(API.downLoadResult, {
+        post(API.downLoadResult, {
           email: this.email,
           sampleId: this.activeRow.sampleId
         }).then(({data = {}}) => {
@@ -147,7 +148,7 @@ export default {
         return false;
       }
       if (this.activeRow && this.activeRow.sampleId) {
-        instance.post(API.sendEmail, {
+        post(API.sendEmail, {
           email: this.email,
           sampleId: this.activeRow.sampleId
         }).then(({data}) => {
@@ -156,8 +157,6 @@ export default {
           } else {
             Message.error('Failed !');
           }
-        }).catch(() => {
-          Message.error('System error, Please try again later!');
         });
       } else {
         Message.error('Please select the result to send!');
@@ -181,7 +180,7 @@ export default {
         page: this.currentPage,
         pageSize: this.pageSize
       };
-      instance.post(API.trainResult, params).then(({data = {}}) => {
+      post(API.trainResult, params).then(({data = {}}) => {
         if (data.success === 'true') {
           const result = data.data || {};
           _this.total = Number(result.totalRows || 0);
@@ -189,8 +188,6 @@ export default {
         } else {
           Message.error('System error, Please try again later!');
         }
-      }).catch(() => {
-        Message.error('System error, Please try again later!');
       });
     }
   }

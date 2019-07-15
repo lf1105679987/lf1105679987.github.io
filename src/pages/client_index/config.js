@@ -1,6 +1,6 @@
 export const onLine = {
   module: 'EPIP introduction：',
-  context: 'EPIP stands for Epitope Presentation Integrated Prediction. It is a model that leverages peptide PSSM score, expression level and length to predict whether a peptide can be presented on the cell surface by MHC-I, which is a crucial step for activating CD8+ T-cell. The model is trained using more than 180,000 peptides identified by mass spectrometry (MS), and with the help of expression data, it can lead to a more accurate presentation prediction. To learn more information, please check our preprint paper <a href="https://www.biorxiv.org/content/10.1101/567081v1" target="_blank">here</a>.EPIP is available at <a href="https://github.com/BGI2016/EPIC"  target="_blank">https://github.com/BGI2016/EPIC</a>. '
+  context: 'EPIP stands for Epitope Presentation Integrated Prediction. It is a model that leverages peptide PSSM score, expression level and length to predict whether a peptide can be presented on the cell surface by MHC-I, which is a crucial step for activating CD8+ T-cell. The model is trained using more than 180,000 peptides identified by mass spectrometry (MS), and with the help of expression data, it can lead to a more accurate presentation prediction. To learn more information, please check our preprint paper here.(<a href="https://www.biorxiv.org/content/10.1101/567081v1" target="_blank">https://www.biorxiv.org/content/10.1101/567081v1</a>)，EPIP is available at <a href="https://github.com/BGI2016/EPIC" target="_blank">https://github.com/BGI2016/EPIC</a>.</br>Corresponding email:   P_genoimmune@genomics.cn.'
 };
 
 export const citaions = {
@@ -17,7 +17,7 @@ export const citaions = {
           hrefs: [
             {
               text: '[PDF]',
-              href: '#'
+              href: '/static/file/EPIP.pdf'
             }
           ]
         }
@@ -31,7 +31,7 @@ export const citaions = {
           hrefs: [
             {
               text: '[PDF]',
-              href: '#'
+              href: '/static/file/PSSMHCpan.pdf'
             }
           ]
         }
@@ -41,7 +41,7 @@ export const citaions = {
 };
 
 export const help = {
-  module: 'Help：',
+  module: 'Data download：',
   table_list: [
     {
       label: 'Training data',
@@ -59,8 +59,8 @@ export const help = {
     //   label: 'Document',
     //   download: '#'
     // }
-  ],
-  contact: 'Contact us: p_XXX@genomics.cn'
+  ]
+  // contact: 'P_genoimmune@genomics.cn'
 };
 
 const allele = 'HLA-A0101,HLA-A0201,HLA-A0203,HLA-A0204,HLA-A0207,HLA-A0301,HLA-A2402,HLA-A2902,HLA-A3101,HLA-A6802,HLA-B3501,HLA-B4402,HLA-B4403,HLA-B5101,HLA-B5401,HLA-B5701,HLA-A1101,HLA-A3201,HLA-B0702,HLA-B1501,HLA-B4001,HLA-C0102,HLA-C0202,HLA-C0303,HLA-C0304,HLA-C0401,HLA-C0501,HLA-C0602,HLA-C0701,HLA-C0702,HLA-C0802,HLA-C1203,HLA-C1402,HLA-C1502,HLA-C1601,HLA-C1701,HLA-A2301,HLA-A2501,HLA-A2601,HLA-A2901,HLA-A6801,HLA-B0801,HLA-B1402,HLA-B1518,HLA-B1801,HLA-B2701,HLA-B2705,HLA-B3503,HLA-B3508,HLA-B3701,HLA-B3801,HLA-B3901,HLA-B3906,HLA-B3924,HLA-B4002,HLA-B4101,HLA-B4501,HLA-B4901,HLA-B5001,HLA-B5501,HLA-B5601,HLA-B7301,HLA-A3301,HLA-B1302,HLA-B1503,HLA-A3303';

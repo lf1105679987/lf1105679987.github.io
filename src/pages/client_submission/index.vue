@@ -22,6 +22,7 @@
           <div class="table-wrap">
             <el-table
               :data="tableData"
+              empty-text="no data"
               highlight-current-row
               border
               style="width: 100%">
@@ -83,9 +84,9 @@
   </div>
 </template>
 <script>
-import {instance, API} from '../../api/api';
+import {post, API} from '../../api/api';
 import Vue from 'vue';
-import { Input, Table, TableColumn, Pagination, Message, Button } from 'element-ui';
+import { Input, Table, TableColumn, Pagination, Button } from 'element-ui';
 import { getUserInfo } from '../../utils/utils';
 Vue.use(Input);
 Vue.use(Table);
@@ -160,14 +161,12 @@ export default {
         page: this.currentPage,
         pageSize: this.pageSize
       };
-      instance.post(API.sampleList, params).then(({data = {}}) => {
+      post(API.sampleList, params).then(({data = {}}) => {
         if (data.success === 'true') {
           const result = data.data || {};
           _this.total = Number(result.totalRows || 0);
           _this.tableData = result.records || [];
         }
-      }).catch(() => {
-        Message.error('System error, Please try again later!');
       });
     }
   }
