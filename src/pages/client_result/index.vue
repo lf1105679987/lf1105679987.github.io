@@ -16,11 +16,11 @@
                 </el-input>
               </div>
               <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
-              <div class="oprate-btn" :class="{disabled: email.trim() === '' || !activeRow.sampleId}">
-                <form :action="action" method="post" target="_blank">
+              <div class="oprate-btn" :class="{disabled: email.trim() === '' || !activeRow.sampleId}"  @click="downLoad">Download
+                <!-- <form :action="action" method="post" target="_blank">
                   <input name="sampleId" type="hidden" :value="activeRow.sampleId" style="display: none">
                   <input class="submitBtn" type="submit" :disabled=" email.trim() === '' || !activeRow.sampleId" value="Download">
-                </form>
+                </form> -->
               </div>
             </div>
           </div>
@@ -129,6 +129,21 @@ export default {
         instance.post(API.downLoadResult, {
           email: this.email,
           sampleId: this.activeRow.sampleId
+        }).then(({data = {}}) => {
+          const blob = new Blob([data]);
+          const fileName = 'download.xlsx';
+          if ('download' in document.createElement('a')) { // 非IE下载
+            const elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
         });
       } else {
         Message.error('Please select the result to download!');

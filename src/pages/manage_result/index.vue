@@ -119,9 +119,27 @@ export default {
         return false;
       }
       if (this.activeRow && this.activeRow.sampleId) {
-        Message.error('暂无下载接口！');
+        instance.post(API.downLoadResult, {
+          email: this.email,
+          sampleId: this.activeRow.sampleId
+        }).then(({data = {}}) => {
+          const blob = new Blob([data]);
+          const fileName = 'download.xlsx';
+          if ('download' in document.createElement('a')) { // 非IE下载
+            const elink = document.createElement('a');
+            elink.download = fileName;
+            elink.style.display = 'none';
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        });
       } else {
-        Message.error('请选择要下载的结果！');
+        Message.error('Please select the result to download!');
       }
     },
     sendEmail () {
