@@ -124,7 +124,7 @@ export default {
     downLoad () {
       post(API.downLoadResult, {
         email: this.email,
-        sampleId: this.activeRow.sampleId
+        sampleId: this.option.sampleId
       }).then(({data = {}}) => {
         const blob = new Blob([data]);
         const fileName = `result${String(Math.random()).split('.')[1]}.txt`;
@@ -148,7 +148,7 @@ export default {
       }
       post(API.sendEmail, {
         email: this.email,
-        sampleId: this.activeRow.sampleId
+        sampleId: this.option.sampleId
       }).then(({data}) => {
         if (data.success === 'true') {
           Message.success('Successful !');
