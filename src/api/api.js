@@ -6,12 +6,8 @@ import { Message } from 'element-ui';
 const instance = axios.create();
 instance.interceptors.request.use(config => {
   const my_token = CookieUtil.get('my_token');
-  if (my_token) {
-    config.headers['Authorization'] = my_token;
-    return config;
-  } else {
-    return Promise.reject(new Error('un_login'));
-  }
+  config.headers['Authorization'] = my_token;
+  return config;
 }, err => {
   return Promise.reject(err);
 });
@@ -43,9 +39,25 @@ const API = {
   updateUser: baseURL + '/user/update', // 更新用户信息
   getUserList: baseURL + '/user/search' // 获取用户列表
 };
+
+/**
+ * ajax这个只用那些需要登录的接口
+ */
+const ajax = axios.create();
+ajax.interceptors.request.use(config => {
+  const my_token = CookieUtil.get('my_token');
+  if (my_token) {
+    config.headers['Authorization'] = my_token;
+    return config;
+  } else {
+    return Promise.reject(new Error('un_login'));
+  }
+}, err => {
+  return Promise.reject(err);
+});
 const post = (url, data) => {
   return new Promise((resolve, reject) => {
-    instance.post(url, data).then(res => {
+    ajax.post(url, data).then(res => {
       resolve(res);
     }).catch(err => {
       if (err.message === 'un_login') {

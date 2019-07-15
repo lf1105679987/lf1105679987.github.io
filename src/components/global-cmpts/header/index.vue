@@ -94,6 +94,7 @@ export default {
       CookieUtil.unset('my_token');
       CookieUtil.unset('userinfo');
       this.userinfo = {};
+      window.location.reload();
     },
     toRegister () {
       this.showModal = true;
