@@ -239,6 +239,13 @@ export default {
         Message.error('Please ensure that the input lengths of peptides and expression are the same.');
         return false;
       }
+      const lengthList1 = text1List.filter(item => {
+        return item.length < this.value_2;
+      });
+      if (lengthList1.length > 0) {
+        Message.error('the number of peptides length must be more than the selected length');
+        return false;
+      }
       if (!this.value_1 || !this.value_2) {
         Message.error('please select allele and length !');
         return false;

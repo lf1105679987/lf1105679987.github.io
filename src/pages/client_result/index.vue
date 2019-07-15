@@ -146,6 +146,11 @@ export default {
       if (this.email.trim() === '') {
         return false;
       }
+      const reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+      if (!reg.test(this.email.trim())) {
+        Message.error('Incorrect email format input');
+        return false;
+      }
       post(API.sendEmail, {
         email: this.email,
         sampleId: this.option.sampleId
