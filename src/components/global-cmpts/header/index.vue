@@ -132,7 +132,8 @@ export default {
           if (data.success === 'true') {
             const userinfo = {
               userName: params.userName,
-              userId: result.userId
+              userId: result.userId,
+              my_token: result.token
             };
             CookieUtil.set('my_token', result.token, result.valid - 3600 * 1000);
             CookieUtil.set('userinfo', JSON.stringify(userinfo));

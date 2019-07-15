@@ -45,6 +45,12 @@
           &.disabled{
             background: #999;
           }
+          .submitBtn{
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+          }
         }
       }
     }

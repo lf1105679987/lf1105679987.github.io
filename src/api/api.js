@@ -29,11 +29,11 @@ const API = {
   sampleList: baseURL + '/sample/search', // 用户端样本列表
   sampleListManage: baseURL + '/sample/selectCond', // 管理端样本列表
   sendEmail: baseURL + '/trainResult/sendMail', // 训练结果发送邮件
+  downLoadResult: baseURL + '/trainResult/download',
   trainResult: baseURL + '/trainResult/search', // 训练结果
   forgetPwd: baseURL + '/user/forget', // 忘记密码
   updatePwd: baseURL + '/user/updatePwd', // 更新密码
   updateUser: baseURL + '/user/update', // 更新用户信息
   getUserList: baseURL + '/user/search' // 获取用户列表
-  // getUserList: baseURL + '/user/search'
 };
 export {instance, API};

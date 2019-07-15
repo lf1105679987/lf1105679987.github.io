@@ -16,7 +16,12 @@
                 </el-input>
               </div>
               <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
-              <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="downLoad">Download</span>
+              <div class="oprate-btn" :class="{disabled: email.trim() === '' || !activeRow.sampleId}">
+                <form :action="action" method="post" target="_blank">
+                  <input name="sampleId" type="hidden" :value="activeRow.sampleId" style="display: none">
+                  <input class="submitBtn" type="submit" :disabled=" email.trim() === '' || !activeRow.sampleId" value="Download">
+                </form>
+              </div>
             </div>
           </div>
           <div class="table-wrap">
@@ -70,6 +75,7 @@ Vue.use(Input);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Pagination);
+const downLoadAction = process.env.NODE_ENV === 'development' ? 'http://47.110.70.236:8010/trainResult/download' : '/trainResult/download';
 export default {
   name: 'Main',
   data () {
@@ -102,7 +108,8 @@ export default {
       pageSize: 20,
       userinfo: {},
       activeRow: {},
-      email: ''
+      email: '',
+      action: downLoadAction
     };
   },
   created () {
@@ -118,7 +125,11 @@ export default {
         return false;
       }
       if (this.activeRow && this.activeRow.sampleId) {
-        Message.error('Download is not supported');
+        // Message.error('Download is not supported');
+        instance.post(API.downLoadResult, {
+          email: this.email,
+          sampleId: this.activeRow.sampleId
+        });
       } else {
         Message.error('Please select the result to download!');
       }
