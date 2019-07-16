@@ -2,7 +2,7 @@
   <div class="header-wrap">
     <div class="logo">
       <div class="logo-img"></div>
-      <div class="logo-text">EPIP Online</div>
+      <div class="logo-text">EPIP</div>
     </div>
     <div class="login-box">
       <a href="./user_center.html" v-show="userinfo.userName" style="text-decoration:underline;">User Information</a>
