@@ -45,11 +45,11 @@ export const help = {
   table_list: [
     {
       label: 'Training data',
-      download: '#'
+      download: 'https://github.com/BGI2016/EPIC/tree/master/epic/training_dataset'
     },
     {
       label: 'Test data',
-      download: '#'
+      download: 'https://github.com/BGI2016/EPIC/tree/master/epic/test_dataset'
     }
     // {
     //   label: 'EPIP data',

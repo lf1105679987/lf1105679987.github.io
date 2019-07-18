@@ -92,7 +92,7 @@
                       </td>
                       <td>
                         <div class="download">
-                          <a :href="item.download" download="" title="download">Data download</a>
+                          <a :href="item.download" target="_blank">Data download</a>
                         </div>
                       </td>
                     </tr>
