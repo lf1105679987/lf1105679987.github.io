@@ -43,13 +43,13 @@
                 prop="allele"
                 label="Allele">
               </el-table-column>
-              <el-table-column
+              <!-- <el-table-column
                 align="center"
                 label="Length">
                 <template slot-scope="scope">
                   <span>{{scope.row.length}} mer peptides</span>
                 </template>
-              </el-table-column>
+              </el-table-column> -->
               <el-table-column
                 align="center"
                 width="80"

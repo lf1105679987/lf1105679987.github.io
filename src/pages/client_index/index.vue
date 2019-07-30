@@ -260,7 +260,8 @@ export default {
         userId: this.userinfo.userId,
         allele: this.multipleLength,
         polypeptides: text1List,
-        exps: text2List
+        exps: text2List,
+        length: '9'
       };
       const _this = this;
       instance.post(API.addSample, data).then(({data = {}}) => {
