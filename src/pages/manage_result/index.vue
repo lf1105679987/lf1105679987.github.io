@@ -78,26 +78,10 @@ export default {
     return {
       currentPage: 1,
       menu: [
-        // {
-        //   text: 'EPIC',
-        //   href: '#'
-        // },
         {
           text: 'Submission',
           href: './manage_submission.html'
         }
-        // {
-        //   text: 'Result',
-        //   href: '#'
-        // },
-        // {
-        //   text: 'Citation',
-        //   href: '#'
-        // },
-        // {
-        //   text: 'Help',
-        //   href: '#'
-        // }
       ],
       tableData: [],
       total: 0,
@@ -121,7 +105,7 @@ export default {
         sampleId: this.option.sampleId
       }).then(({data = {}}) => {
         const blob = new Blob([data]);
-        const fileName = `result${String(Math.random()).split('.')[1]}.txt`;
+        const fileName = `result${String(Math.random()).split('.')[1]}.csv`;
         if ('download' in document.createElement('a')) { // 非IE下载
           const elink = document.createElement('a');
           elink.download = fileName;

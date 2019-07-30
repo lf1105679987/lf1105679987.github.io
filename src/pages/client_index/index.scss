@@ -86,8 +86,21 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      .select-label{
+        width: 150px;
+      }
       .m-select{
         margin-left: 10px;
+        width: 600px;
+      }
+      .el-select{
+        width: 100%;
+      }
+      .tips{
+        color: #666;
+        word-break: break-all;
+        word-wrap: break-word;
+        padding-left: 10px;
       }
     }
 

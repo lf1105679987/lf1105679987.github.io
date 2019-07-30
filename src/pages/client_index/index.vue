@@ -29,9 +29,9 @@
                 </div>
               </div>
               <div class="select-wrap">
-                <div class="select-all-ele">Select allele and peptide length</div>
+                <div class="select-label">Select allele</div>
                 <div class="m-select m-select_1">
-                  <el-select no-data-text="no data" v-model="value_1" placeholder="Please Select" @change="changeAllele">
+                  <el-select multiple no-data-text="no data" v-model="value_1" placeholder="Please Select" @change="changeAllele">
                     <el-option
                       v-for="item in options_1"
                       :key="item.val"
@@ -40,18 +40,23 @@
                     </el-option>
                   </el-select>
                 </div>
-                <div class="m-select m-select_2">
-                  <el-select no-data-text="no data" v-model="value_2" placeholder="Please Select" popper-class="m-select m-select_2">
-                    <el-option
-                      v-for="item in options_2"
-                      :key="item"
-                      :label="item"
-                      :value="item">
-                    </el-option>
-                  </el-select>
-                </div>
               </div>
-
+              <div  class="select-wrap">
+                <div class="select-label">Input multiple alleles</div>
+                <div class="m-select">
+                  <el-input :disabled="true" v-model="multipleLength" placeholder=""></el-input>
+                </div>
+                <el-popover
+                  placement="top-start"
+                  title=""
+                  width="200"
+                  trigger="hover"
+                  :content="tips_3">
+                  <span slot="reference" class="tips">
+                    <i class="el-icon-question"></i>
+                  </span>
+                </el-popover>
+              </div>
               <div class="submit" @click="Submit">Submit</div>
             </div>
           </div>
@@ -119,7 +124,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <copyRight></copyRight>
       </div>
@@ -127,15 +131,17 @@
   </div>
 </template>
 <script>
-import config, { getAlleleMap, peptidesMap } from './config.js';
+import config, { getAlleleMap } from './config.js';
 import TextareaForDropTxt from '@/components/bus-cmpts/textarea-for-drop-txt';
 import Vue from 'vue';
-import { Select, Option, Button, Message } from 'element-ui';
+import { Select, Option, Button, Message, Popover, Input } from 'element-ui';
 import {instance, API} from '../../api/api';
 import { getUserInfo } from '../../utils/utils';
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Button);
+Vue.use(Popover);
+Vue.use(Input);
 export default {
   name: 'Main',
   components: {
@@ -143,6 +149,7 @@ export default {
   },
   data () {
     return {
+      multipleLength: '',
       showModal: false,
       menu: [
         {
@@ -153,32 +160,27 @@ export default {
           text: 'Submission',
           href: './client_submission.html'
         },
-        // {
-        //   text: 'Result',
-        //   href: './client_result.html'
-        // },
         {
           text: 'Citation',
           href: '#Citation'
         },
         {
           text: 'Help',
-          href: '#Help'
+          href: './help.html'
         }
       ],
       onLine: config.onLine,
       citaions: config.citaions,
       help: config.help,
       placeholder_1: 'Input peptides/ upload peptide file (txt format)',
-      tips_1: '* the number of peptides should not be more than 1000',
+      tips_1: 'Input peptide sequences or upload file (txt format) that contains peptides. One peptide per line. Please see the provided example.',
       placeholder_2: 'Input expression values/ upload expression file (txt format)',
-      tips_2: '* the expression value should be matched to corresponding peptide.',
+      tips_2: 'Input expression value (should be TPM value) of each corresponding peptide. One value per line. Please see the provided example',
+      tips_3: 'If you want to make predictions for multiple HLAs, please input the desired HLAs, separated by comma, e.g. HLA-A0101,HLA-A0201,HLA-A0301',
       text1: '',
       text2: '',
       options_1: getAlleleMap(),
-      options_2: [],
-      value_1: '',
-      value_2: '',
+      value_1: [],
       userinfo: {}
     };
   },
@@ -196,6 +198,10 @@ export default {
     });
   },
   methods: {
+    limitInput (value) {
+      value = value.replace(/[^,0-9]/ig, '');
+      this.multipleLength = value;
+    },
     changeText1 (val) {
       this.text1 = val;
     },
@@ -203,7 +209,7 @@ export default {
       this.text2 = val;
     },
     changeAllele (val) {
-      this.options_2 = peptidesMap[val.split('-')[1]];
+      this.multipleLength = val.join(',');
     },
     Submit () {
       if (!this.userinfo.userId) {
@@ -239,30 +245,30 @@ export default {
         Message.error('Please ensure that the input lengths of peptides and expression are the same.');
         return false;
       }
-      const lengthList1 = text1List.filter(item => {
-        return item.length < this.value_2;
-      });
-      if (lengthList1.length > 0) {
-        Message.error('the number of peptides length must be more than the selected length');
-        return false;
-      }
-      if (!this.value_1 || !this.value_2) {
-        Message.error('please select allele and length !');
+      // const lengthList1 = text1List.filter(item => {
+      //   return item.length < this.value_2;
+      // });
+      // if (lengthList1.length > 0) {
+      //   Message.error('the number of peptides length must be more than the selected length');
+      //   return false;
+      // }
+      if (!this.multipleLength) {
+        Message.error('please select allele!');
         return false;
       }
       const data = {
         userId: this.userinfo.userId,
-        allele: this.value_1,
-        length: this.value_2,
+        allele: this.multipleLength,
         polypeptides: text1List,
         exps: text2List
       };
+      console.log(data);
+      return false;
       const _this = this;
       instance.post(API.addSample, data).then(({data = {}}) => {
         if (data.success === 'true') {
           Message.success('Successful !');
           _this.value_1 = '';
-          _this.value_2 = '';
           _this.$bus.$emit('clearInput', {});
           setTimeout(() => {
             window.location.href = './client_submission.html';
@@ -274,43 +280,6 @@ export default {
       }).catch(() => {
         Message.error('System error, Please try again later!');
       });
-    },
-    Submits () {
-      if (!this.value_1 || !this.value_2) {
-        Message.error('Please Select !');
-        return false;
-      }
-      const text1 = this.text1.replace(/\n/g, '-');
-      const text2 = this.text2.replace(/\n/g, '-');
-      const text1List = text1.split('-').filter(item => item.length);
-      const text2List = text2.split('-').filter(item => item.length);
-      const data = {
-        userId: this.userinfo.userId,
-        allele: this.value_1,
-        length: this.value_2,
-        polypeptides: text1List,
-        exps: text2List
-      };
-      const _this = this;
-      instance.post(API.addSample, data).then(({data = {}}) => {
-        if (data.success === 'true') {
-          Message.success('Successful!');
-          _this.value_1 = '';
-          _this.value_2 = '';
-          _this.$bus.$emit('clearInput', {});
-        } else {
-          Message.error(data.msg || 'Failed !');
-        }
-        _this.showModal = false;
-      }).catch(() => {
-        Message.error('System error, Please try again later!');
-      });
-    },
-    closeModal () {
-      this.value_1 = '';
-      this.value_2 = '';
-      this.options_2 = [];
-      this.showModal = false;
     }
   }
 };

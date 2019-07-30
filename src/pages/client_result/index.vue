@@ -91,17 +91,13 @@ export default {
           text: 'Submission',
           href: './client_submission.html'
         },
-        // {
-        //   text: 'Result',
-        //   href: '#'
-        // },
         {
           text: 'Citation',
           href: './client_index.html#Citation'
         },
         {
           text: 'Help',
-          href: './client_index.html#Help'
+          href: './help.html'
         }
       ],
       tableData: [],
@@ -127,7 +123,7 @@ export default {
         sampleId: this.option.sampleId
       }).then(({data = {}}) => {
         const blob = new Blob([data]);
-        const fileName = `result${String(Math.random()).split('.')[1]}.txt`;
+        const fileName = `result${String(Math.random()).split('.')[1]}.csv`;
         if ('download' in document.createElement('a')) { // 非IE下载
           const elink = document.createElement('a');
           elink.download = fileName;

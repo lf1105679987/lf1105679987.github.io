@@ -12,15 +12,26 @@
       >
         <el-button size="mini" icon="el-icon-upload2">upload</el-button>
       </el-upload>
-      <span class="tips" v-text="tips"></span>
+      <el-popover
+        placement="top-start"
+        title=""
+        width="200"
+        trigger="hover"
+        :content="tips">
+        <span slot="reference" class="tips">
+          <a href="javascript:;">example</a>
+          <i class="el-icon-question"></i>
+        </span>
+      </el-popover>
     </div>
   </div>
 </template>
 <script>
 import Vue from 'vue';
-import { Message, Button, Upload } from 'element-ui';
+import { Message, Button, Upload, Popover } from 'element-ui';
 Vue.use(Button);
 Vue.use(Upload);
+Vue.use(Popover);
 export default {
   name: 'TextareaForDropTxt',
   props: {
@@ -145,6 +156,8 @@ export default {
     }
     .tips{
       color: #666;
+      word-break: break-all;
+      word-wrap: break-word;
     }
   }
 </style>

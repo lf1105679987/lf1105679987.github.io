@@ -108,26 +108,6 @@ export default {
     return {
       currentPage: 1,
       menu: [
-        // {
-        //   text: 'EPIC',
-        //   href: '#'
-        // },
-        // {
-        //   text: 'Submission',
-        //   href: './client_index.html'
-        // },
-        // {
-        //   text: 'Result',
-        //   href: './client_result.html'
-        // },
-        // {
-        //   text: 'Citation',
-        //   href: '#'
-        // },
-        // {
-        //   text: 'Help',
-        //   href: '#'
-        // }
       ],
       tableData: [],
       total: 0,

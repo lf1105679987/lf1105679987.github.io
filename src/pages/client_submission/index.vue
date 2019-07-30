@@ -117,7 +117,7 @@ export default {
         },
         {
           text: 'Help',
-          href: './client_index.html#Help'
+          href: './help.html'
         }
       ],
       tableData: [],
