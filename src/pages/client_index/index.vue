@@ -262,8 +262,6 @@ export default {
         polypeptides: text1List,
         exps: text2List
       };
-      console.log(data);
-      return false;
       const _this = this;
       instance.post(API.addSample, data).then(({data = {}}) => {
         if (data.success === 'true') {
