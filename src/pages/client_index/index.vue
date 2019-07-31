@@ -40,8 +40,18 @@
                     </el-option>
                   </el-select>
                 </div>
+                <el-popover
+                  placement="top-start"
+                  title=""
+                  width="200"
+                  trigger="hover"
+                  :content="tips_3">
+                  <span slot="reference" class="tips">
+                    <i class="el-icon-question"></i>
+                  </span>
+                </el-popover>
               </div>
-              <div  class="select-wrap">
+              <!-- <div  class="select-wrap">
                 <div class="select-label">Input multiple alleles</div>
                 <div class="m-select">
                   <el-input :disabled="true" v-model="multipleLength" placeholder=""></el-input>
@@ -56,7 +66,7 @@
                     <i class="el-icon-question"></i>
                   </span>
                 </el-popover>
-              </div>
+              </div> -->
               <div class="submit" @click="Submit">Submit</div>
             </div>
           </div>

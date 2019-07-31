@@ -30,7 +30,7 @@
                 <li class="circle">Each peptide should have a corresonding expression value orderly</li>
                 <li class="circle">
                   Input example:
-                  <div>
+                  <div style="padding-left: 11px;">
                     <img src="./images/example2.png" alt="">
                   </div>
                 </li>
@@ -60,8 +60,8 @@
               <ul>
                 <li class="circle">
                   <span>The output format example:</span>
-                  <div>
-                    <img src="./images/example3.png" alt="">
+                  <div style="padding-left: 10px;">
+                    <img class="img3" src="./images/example3.png" alt="">
                   </div>
                   <span>The “Polypeptide” and the “Allele” column show the peptide and the HLA allele you input, the “Score” column shows the predicted score of EPIP, the higher score means the higher possbility that the peptide can be presented. If the score is “NA”, it means that EPIP can not make predictions for this peptide.</span>
                 </li>
