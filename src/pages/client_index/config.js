@@ -6,7 +6,7 @@ export const onLine = {
 export const citaions = {
   module: 'Citations：',
   content: {
-    title: 'For publicction of results, please cite:',
+    title: 'For publication of results, please cite:',
     paragraph: [
       {
         content: [

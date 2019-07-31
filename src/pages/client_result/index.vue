@@ -124,7 +124,11 @@ export default {
       }).then(({data = {}}) => {
         const blob = new Blob([data]);
         const fileName = `result${String(Math.random()).split('.')[1]}.csv`;
-        if ('download' in document.createElement('a')) { // 非IE下载
+        if (window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob, fileName);
+        } else if (window.navigator.msSaveBlob) {
+          window.navigator.msSaveBlob(blob, fileName);
+        } else if ('download' in document.createElement('a')) {
           const elink = document.createElement('a');
           elink.download = fileName;
           elink.style.display = 'none';
@@ -133,8 +137,6 @@ export default {
           elink.click();
           URL.revokeObjectURL(elink.href); // 释放URL 对象
           document.body.removeChild(elink);
-        } else { // IE10+下载
-          navigator.msSaveBlob(blob, fileName);
         }
       });
     },
