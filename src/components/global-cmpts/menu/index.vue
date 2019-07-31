@@ -14,8 +14,8 @@ export default {
       default () {
         return [
           {
-            text: 'EPIC',
-            href: '#EPIC'
+            text: 'EPIP',
+            href: '#EPIP'
           },
           {
             text: 'Submission',

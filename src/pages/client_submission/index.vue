@@ -100,8 +100,8 @@ export default {
       currentPage: 1,
       menu: [
         {
-          text: 'EPIC',
-          href: './client_index.html#EPIC'
+          text: 'EPIP',
+          href: './client_index.html#EPIP'
         },
         {
           text: 'Submission',

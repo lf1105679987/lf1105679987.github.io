@@ -12,6 +12,7 @@
       >
         <el-button size="mini" icon="el-icon-upload2">upload</el-button>
       </el-upload>
+      <a href="javascript:;" @click="exampleFunc">example</a>
       <el-popover
         placement="top-start"
         title=""
@@ -19,7 +20,6 @@
         trigger="hover"
         :content="tips">
         <span slot="reference" class="tips">
-          <a href="javascript:;">example</a>
           <i class="el-icon-question"></i>
         </span>
       </el-popover>
@@ -46,6 +46,10 @@ export default {
     tips: {
       type: String,
       default: 'some tips'
+    },
+    exampleTxt: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -93,6 +97,10 @@ export default {
     // });
   },
   methods: {
+    exampleFunc () {
+      this.text = this.exampleTxt;
+      this.outPutVal();
+    },
     beforUpload (file) {
       const name = file.name;
       const index1 = name.lastIndexOf('.');
@@ -113,12 +121,16 @@ export default {
         const fileNameLength = file.name.length;
         const suffix = file.name.substring(index + 1, fileNameLength);
         if (suffix === 'txt') {
-          var reader = new FileReader();
-          reader.readAsText(data[0]);
-          reader.onload = function (e) {
-            _this.text = e.target.result;
-            _this.outPutVal();
-          };
+          if (window.FileReader) {
+            var reader = new FileReader();
+            reader.readAsText(data[0]);
+            reader.onload = function (e) {
+              _this.text = e.target.result;
+              _this.outPutVal();
+            };
+          } else {
+            Message.error('Browser does not support');
+          }
         } else {
           Message.error('Please upload a txt file');
         }

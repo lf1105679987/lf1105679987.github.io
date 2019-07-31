@@ -6,7 +6,7 @@
         <Menu :data="menu"></Menu>
         <div class="container">
           <div class="module">
-            <div class="module-title" id="EPIC">
+            <div class="module-title" id="EPIP">
               <div class="line"></div>
               <div class="title">{{onLine.module}}</div>
             </div>
@@ -22,10 +22,10 @@
             <div class="module-content pdlr">
               <div class="form-wrap">
                 <div class="textarea-item">
-                  <TextareaForDropTxt :change="changeText1" :tips="tips_1" :placeholder="placeholder_1"></TextareaForDropTxt>
+                  <TextareaForDropTxt :exampleTxt="exampleTxt1" :change="changeText1" :tips="tips_1" :placeholder="placeholder_1"></TextareaForDropTxt>
                 </div>
                 <div class="textarea-item">
-                  <TextareaForDropTxt :change="changeText2" :tips="tips_2" :placeholder="placeholder_2"></TextareaForDropTxt>
+                  <TextareaForDropTxt :exampleTxt="exampleTxt2" :change="changeText2" :tips="tips_2" :placeholder="placeholder_2"></TextareaForDropTxt>
                 </div>
               </div>
               <div class="select-wrap">
@@ -163,8 +163,8 @@ export default {
       showModal: false,
       menu: [
         {
-          text: 'EPIC',
-          href: '#EPIC'
+          text: 'EPIP',
+          href: '#EPIP'
         },
         {
           text: 'Submission',
@@ -191,7 +191,9 @@ export default {
       text2: '',
       options_1: getAlleleMap(),
       value_1: [],
-      userinfo: {}
+      userinfo: {},
+      exampleTxt1: 'ATLPQSLLEK\nSSFRNLWLPK\nVTCLSNWFGK\nRVCPFPQCCK\nTVNQKTTIYK',
+      exampleTxt2: '19.77\n17.41\n29.15\n10.23\n145.91'
     };
   },
   created () {

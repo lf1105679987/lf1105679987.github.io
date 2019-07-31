@@ -1,6 +1,6 @@
 export const onLine = {
   module: 'EPIP introduction：',
-  context: 'EPIP stands for Epitope Presentation Integrated Prediction. It is a model that leverages peptide PSSM score, expression level and length to predict whether a peptide can be presented on the cell surface by MHC-I, which is a crucial step for activating CD8+ T-cell. The model is trained using more than 180,000 peptides identified by mass spectrometry (MS), and with the help of expression data, it can lead to a more accurate presentation prediction. To learn more information, please check our preprint paper here.(<a href="https://www.biorxiv.org/content/10.1101/567081v1" target="_blank">https://www.biorxiv.org/content/10.1101/567081v1</a>)，EPIP is available at <a href="https://github.com/BGI2016/EPIC" target="_blank">https://github.com/BGI2016/EPIC</a>.</br><span style="padding-left: 20px;">Corresponding email:   P_genoimmune@genomics.cn.</span>'
+  context: 'EPIP stands for Epitope Presentation Integrated Prediction. It is a model that leverages peptide PSSM score, expression level and length to predict whether a peptide can be presented on the cell surface by MHC-I, which is a crucial step for activating CD8+ T-cell. The model is trained using more than 180,000 peptides identified by mass spectrometry (MS), and with the help of expression data, it can lead to a more accurate presentation prediction. To learn more information, please check our preprint paper here.(<a href="https://www.biorxiv.org/content/10.1101/567081v1" target="_blank">https://www.biorxiv.org/content/10.1101/567081v1</a>)，EPIP is available at <a href="https://github.com/BGI2016/EPIC" target="_blank">https://github.com/BGI2016/EPIP</a>.</br><span style="padding-left: 20px;">Corresponding email:   P_genoimmune@genomics.cn.</span>'
 };
 
 export const citaions = {
@@ -10,7 +10,7 @@ export const citaions = {
     paragraph: [
       {
         content: [
-          'Hu W, Qiu S, Li Y, et al. EPIC: MHC-I epitope prediction integrating mass spectrometry derived motifs and tissue-specific expression profiles[J]. bioRxiv, 2019: 567081.'
+          'Hu W, Qiu S, Li Y, et al. EPIP: MHC-I epitope prediction integrating mass spectrometry derived motifs and tissue-specific expression profiles[J]. bioRxiv, 2019: 567081.'
         ],
         relative: {
           panle: '',
