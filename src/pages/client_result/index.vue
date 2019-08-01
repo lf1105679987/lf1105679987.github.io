@@ -16,11 +16,8 @@
                 </el-input>
               </div>
               <span class="oprate-btn" :class="{disabled: email.trim() === ''}" @click="sendEmail">Send</span>
-              <div class="oprate-btn" @click="downLoad">Download
-                <!-- <form :action="action" method="post" target="_blank">
-                  <input name="sampleId" type="hidden" :value="activeRow.sampleId" style="display: none">
-                  <input class="submitBtn" type="submit" :disabled=" email.trim() === '' || !activeRow.sampleId" value="Download">
-                </form> -->
+              <div class="oprate-btn">
+                <a style="color: #fff;text-decoration: none;" :href="downloadSite">Download</a>
               </div>
             </div>
           </div>
@@ -69,7 +66,7 @@
 </template>
 <script>
 import {API, post} from '../../api/api';
-import { getUrlParams, getUserInfo } from '../../utils/utils';
+import { getUrlParams, getUserInfo, buildUrl } from '../../utils/utils';
 import Vue from 'vue';
 import { Input, Table, TableColumn, Pagination, Message } from 'element-ui';
 Vue.use(Input);
@@ -106,12 +103,14 @@ export default {
       userinfo: {},
       activeRow: {},
       email: '',
-      action: downLoadAction
+      action: downLoadAction,
+      downloadSite: 'javascript:;'
     };
   },
   created () {
     this.userinfo = getUserInfo();
     this.option = getUrlParams();
+    this.downloadSite = buildUrl(API.downLoadResult, this.option);
   },
   mounted () {
     this.getData();

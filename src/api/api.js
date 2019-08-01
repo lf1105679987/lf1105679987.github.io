@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { CookieUtil } from '../utils/utils';
+import { CookieUtil, buildUrl } from '../utils/utils';
 import Vue from 'vue';
 import { Message } from 'element-ui';
 const instance = axios.create();
@@ -69,4 +69,19 @@ const post = (url, data) => {
     });
   });
 };
-export {instance, API, post};
+const ajaxGet = (url = '', data = {}) => {
+  const newUrl = buildUrl(url, data);
+  return new Promise((resolve, reject) => {
+    ajax.get(newUrl).then(res => {
+      resolve(res);
+    }).catch(err => {
+      if (err.message === 'un_login') {
+        Vue.prototype.$bus.$emit('openLogin');
+      } else {
+        Message.error('System error, Please try again later!');
+      }
+      reject(err);
+    });
+  });
+};
+export {instance, API, post, ajaxGet};
